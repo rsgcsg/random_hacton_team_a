@@ -1,71 +1,124 @@
 {
   "degrees": [
     {
+      "id": "MATHS",
+      "name": "Maths",
+      "color": "#FF5733",
+      "major_array": [
+        "Pure Mathematics",
+        "Applied Maths",
+        "Mathematical Artificial Intelligence",
+        "Optimisation and Operations Ressearch",
+        "Mathematical Physics",
+        "Statistics and Mathematical Data Science"
+      ],
+      "course_array": [
+        "MATH1040",
+        "MATH1050",
+        "MATH1051",
+        "MATH1052",
+        "MATH1061",
+        "MATH1071",
+        "MATH1072",
+        "MATH1081",
+        "MATH2000",
+        "MATH2100",
+        "MATH2302",
+        "MATH2401",
+        "MATH2504",
+        "MATH3070",
+        "MATH3102",
+        "MATH3103",
+        "MATH3204",
+        "MATH3205",
+        "MATH3301",
+        "MATH3306",
+        "MATH3403",
+        "MATH3404",
+        "MATH3405",
+        "MATH3201",
+        "MATH4090",
+        "MATH4104",
+        "MATH4105",
+        "MATH4107",
+        "MATH4108",
+        "MATH4302",
+        "MATH4306",
+        "MATH4307",
+        "MATH4402",
+        "MATH4403",
+        "MATH4405",
+        "MATH4407",
+        "MATH4408",
+        "PHYS1001",
+        "PHYS1002",
+        "PHYS1171",
+        "SCIE1000",
+        "STAT1201",
+        "STAT1301"
+      ]
+    },
+    {
       "id": "CS",
       "name": "Computer Science",
       "color": "#FF5733",
       "major_array": [
-        "SWE",
-        "AI"
+        "Data Science",
+        "Machine Learning",
+        "Programming Languages"
       ],
       "course_array": [
-        "CS101",
-        "CS102",
-        "MA101",
-        "CS201",
-        "CS202",
-        "CS301",
-        "CS302",
-        "CS401"
-      ]
-    },
-    {
-      "id": "EE",
-      "name": "Electrical Engineering",
-      "color": "#337AFF",
-      "major_array": [
-        "CE"
-      ],
-      "course_array": [
-        "CS101",
-        "MA101",
-        "PH101",
-        "EE201"
+        "CSSE1001",
+        "STAT1201",
+        "STAT1301",
+        "CSSE2002",
+        "MATH1051",
+        "MATH1052"
       ]
     }
   ],
   "majors": [
     {
-      "id": "SWE",
-      "name": "Software Engineering",
+      "id": "Pure Mathematics",
+      "name": "Pure Mathematics",
       "color": "#FFC300",
-      "course_array": [
-        "CS101",
-        "CS102",
-        "CS202",
-        "CS301"
-      ]
+      "course_array": ["MATH2301", "MATH2001", "MATH2901", "MATH2302"]
     },
     {
-      "id": "AI",
-      "name": "Artificial Intelligence",
+      "id": "Applied Maths",
+      "name": "Applied Maths",
+      "color": "#FFC300",
+      "course_array": []
+    },
+    {
+      "id": "Mathematical Artificial Intelligence",
+      "name": "Mathematical Artificial Intelligence",
+      "color": "#FFC300",
+      "course_array": []
+    },
+    {
+      "id": "Optimisation and Operations Ressearch",
+      "name": "Optimisation and Operations Ressearch",
+      "color": "#FFC300",
+      "course_array": []
+    },
+    {
+      "id": "Mathematical Physics",
+      "name": "Mathematical Physics",
+      "color": "#FFC300",
+      "course_array": []
+    },
+    {
+      "id": "Statistics and Mathematical Data Science",
+      "name": "Statistics and Mathematical Data Science",
       "color": "#DAF7A6",
-      "course_array": [
-        "CS101",
-        "CS102",
-        "CS201",
-        "CS401"
-      ]
+      "course_array": []
     },
     {
       "id": "CE",
       "name": "Computer Engineering",
       "color": "#C70039",
-      "course_array": [
-        "CS101",
-        "PH101",
-        "EE201"
-      ]
+      "course_array": ["CS101", "PH101", "EE201"]
     }
   ],
   "courses": [
@@ -246,6 +299,5 @@
         ]
       }
     }
-  ],
-  "prerequisites": []
+  ]
 }

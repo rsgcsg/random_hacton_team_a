@@ -1,5 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Info } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.jsx";
+import { Info } from "lucide-react";
 
 const Legend = () => {
   return (
@@ -22,7 +27,7 @@ const Legend = () => {
             <li>• Degree selection (lowest priority)</li>
           </ul>
         </div>
-        
+
         <div>
           <h4 className="font-semibold mb-1">Prerequisite Arrows</h4>
           <div className="space-y-1">
@@ -31,8 +36,10 @@ const Legend = () => {
               <span className="text-muted-foreground">AND requirements</span>
             </div>
             <div className="flex items-center">
-              <div className="w-4 h-0.5 bg-red-400 mr-2"></div>
-              <span className="text-muted-foreground">OR requirements (colored)</span>
+              <div className="w-4 h-0.5 bg-teal-300 mr-2"></div>
+              <span className="text-muted-foreground">
+                OR requirements (colored)
+              </span>
             </div>
             <div className="flex items-center">
               <div className="w-4 h-0.5 bg-orange-500 mr-2"></div>
@@ -40,7 +47,7 @@ const Legend = () => {
             </div>
           </div>
         </div>
-        
+
         <div>
           <h4 className="font-semibold mb-1">Interactions</h4>
           <ul className="space-y-1 text-muted-foreground">
@@ -52,8 +59,7 @@ const Legend = () => {
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default Legend
-
+export default Legend;

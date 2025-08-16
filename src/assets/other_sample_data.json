@@ -1,0 +1,2834 @@
+{
+  "MATH1061": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1081"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7861"
+        }
+      ],
+      "raw": "MATH1081 (advanced version), MATH7861 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Propositional & predicate logic, valid arguments, methods of proof. Elementary set theory. Elementary graph theory. Relations & functions. Induction & recursive definitions. Counting methods (pigeonhole, inclusion/exclusion). Introductory probability. Binary operations, groups, fields. Applications of finite fields. Elementary number theory."
+  },
+  "MATH1071": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1050"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "A grade of 6 or above in MATH1050; or A grade of B or higher in Queensland Year 12 Specialist Mathematics (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7501"
+        }
+      ],
+      "raw": "MATH1051, MATH7051, MATH7501"
+    },
+    "units": "2",
+    "summary": "1. Elementary linear algebra: Vectors, linear independence, scalar product. Matrices, simultaneous equations, determinants, Gaussian elimination, eigenvalues, eigenvectors, applications. Equation of straight line & plane. 2. Introduction to proof-based calculus: Fields, sequences, limits, continuity, intermediate and extreme value theorems, maxima & minima. 3. Techniques of calculus: Series, differentiation, integration, numerical methods, Taylor series, L'Hopital's rule. This course differs from MATH1051 by treating material in more depth and with greater rigour."
+  },
+  "MATH2070": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1301"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(STAT1201 or STAT1301), (MATH1052 or MATH1072)",
+    "incompat": null,
+    "units": "2",
+    "summary": "From Semester 2 2018, MATH2070 will be replaced by MATH3070. The biggest challenge facing our planet is how to maintain and manage our natural systems such as fisheries, forestry and biodiversity in the face of habitat destruction, climate change, pollution and over harvesting. In this course you will learn how to apply deterministic differential and difference equation models to real world examples, and how to solve them using numerical methods in MATLAB. You will also learn how to quantify system uncertainties with the help of statistical and probabilistic methods. Students will be taught a range of methods which are employed in industry, research, consultancies and government to model complex natural resource problems. In the process, students will learn how certain fundamental mathematical concepts such as critical points, orthogonality, eigenvalues and singularity recur in different mathematical frameworks with different but, invariably, vitally important physical interpretations."
+  },
+  "MATH4090": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3090"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3090",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7049"
+        }
+      ],
+      "raw": "MATH7049 (co-taught, last offered 2022)"
+    },
+    "units": "2",
+    "summary": "Introduction to computational methods in finance & applications. Topics from binomial trees, numerical solution of stochastic differential equations, and numerical solution of Black-Scholes like partial differential equations."
+  },
+  "MATH4001": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": null,
+    "units": "2",
+    "summary": ""
+  },
+  "MATH3405": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2000 or MATH2001",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7435"
+        }
+      ],
+      "raw": "MATH7435 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Curves: Parameterised curves, regular curves, arc length. Local theory, Frenet frame. Global properties of plane curves. Regular surfaces: Change of parameterisation, differential functions on surfaces. The tangent plane, the differential of a map. First fundamental form, area functional. Geometry of the Gauss map: fundamental properties, local coordinates. Vector fields. Minimal surfaces and other applications. Intrinsic and extrinsic geometry of surfaces: isometries, conformal maps. Selected topics from: Theorema egregium. Parallel transport, geodesics. Gauss-Bonnet Theorem and applications. Exponential map. Geodesic polar coordinates."
+  },
+  "MATH4105": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "PHYS2100"
+            },
+            {
+              "op": "COURSE",
+              "code": "PHYS2101"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2000"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2001"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH3102"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(PHYS2100 or PHYS2101) + (MATH2000 or MATH2001 or MATH3102)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7105"
+        }
+      ],
+      "raw": "MATH7105 (co-taught, last offered 2022)"
+    },
+    "units": "2",
+    "summary": "Manifolds, tensors, connections & covariant differentiation, parallel transport, goedesics & curvature, differential forms. Foundations of general relativity. Applications to astronomy & cosmology."
+  },
+  "MATH3402": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2400"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2401"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2301"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2000"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2001"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2400 or MATH2401) + (MATH2301 or MATH2000 or MATH2001)",
+    "incompat": null,
+    "units": "2",
+    "summary": "Topological spaces: compactness, continuity, separation axioms, Baire category theorem. Classical linear functional analysis: Banach and Hilbert spaces, linear functionals, L^p spaces (as completions), Riesz representation theorem, uniform boundedness principle, dual spaces, weak convergence, Hahn-Banach theorem, bounded operators, open mapping theorem, spectrum and resolvent."
+  },
+  "MATH3901": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2400"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2401"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2400 or MATH2401) + (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3401"
+        }
+      ],
+      "raw": "MATH3401 (co-taught and non-advanced version)"
+    },
+    "units": "2",
+    "summary": "Analytical functions. Cauchy-Riemann equations. Complex mappings. Cauchy's integral formulas. Morera's, Liouville's & Rouche's theorems. Taylor & Laurent series. Analytic continuation, residues & applications to integration. Boundary-value problems. This is the Advanced Science version of MATH3401."
+  },
+  "MATH4403": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2400"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2401"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2400 or MATH2401",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7403"
+        }
+      ],
+      "raw": "MATH7403"
+    },
+    "units": "2",
+    "summary": "(offered in semester 1 in odd years only) Laplace and heat equations (fundamental solutions, maximum principles). Wave equation (symmetric solutions, dimension reduction). Sobolev spaces ( regularity of solutions, energy methods, embedding theorems). Generalizations and applications."
+  },
+  "MATH4306": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2301"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2302"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2301, MATH2302 (or equivalent knowledge)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4302"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH4303"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7302"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7303"
+        }
+      ],
+      "raw": "MATH4302, MATH4303, MATH7302, MATH7303"
+    },
+    "units": "2",
+    "summary": "This course will cover a selection of topics from the areas of combinatorial geometry, graph theory, design theory, and probabilistic combinatorics."
+  },
+  "MATH6101": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": null,
+    "units": "6",
+    "summary": "Supervised project on research topic in mathematics, approved by Head, Mathematics. Student selects supervisor and project topic from advertised list, in negotiation with academic staff. Thesis to be written, and oral presentation to be given, on the research topic. Students commencing year-long project in Semester 1 enrol in MATH6100 for Semester 1 and Semester 2; students commencing year-long project in Semester 2 enrol in MATH6101 for Semester 2 and the following Semester 1; students completing project within one semester enrol in MATH6030 in Semester 1 or 2."
+  },
+  "MATH6030": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": null,
+    "units": "6",
+    "summary": "Supervised project on research topic in mathematics, approved by Head, Mathematics. Student selects supervisor and project topic from advertised list, in negotiation with academic staff. Thesis to be written, and oral presentation to be given, on the research topic. Students commencing year project in sem 1 enrol in MATH6100; students commencing year project in sem 2 enrol in MATH6101; students completing project within one semester enrol in MATH6030 in Semester 1 or 2."
+  },
+  "MATH1050": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1040"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1040; or a grade of C or higher in Queensland Year 12 Mathematical Methods (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7050"
+        }
+      ],
+      "raw": "MATH1051, MATH1052, MATH7050 (co-taught) or a grade of B or higher in Queensland Year 12 Specialist Mathematics (Units 3 & 4) (or equivalent)."
+    },
+    "units": "2",
+    "summary": "This course covers the core content of Queensland Specialist Mathematics syllabus, which is similar to the former Queensland Mathematics C syllabus. It provides an introduction to vectors, matrices, complex numbers and mathematical induction and other methods of proof. It also extends students' knowledge of functions, differentiation and integration."
+  },
+  "MATH3302": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2301"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2301",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7332"
+        }
+      ],
+      "raw": "MATH7332 (co-taught)"
+    },
+    "units": "2",
+    "summary": "Cryptographic methods for encryption, decryption & authentication. AES, RSA. Error correction & detection. Hamming, BCH, Reed-Solomon & cyclic codes. Applications: CD players, EFTPOS, etc."
+  },
+  "MATH3301": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2302"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2302",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7331"
+        }
+      ],
+      "raw": "MATH7331 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Various topics in Graph Theory including a selection of topics from extremal graphs, connectivity, network flows, planarity, graph colouring, graph factors and factorisations. Various topics in Design Theory including a selection of topics from balanced incomplete block designs, transversal and group divisible designs, pairwise balanced designs, orthogonal arrays and Latin squares."
+  },
+  "MATH3306": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1061"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1061",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3304"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH3305"
+        }
+      ],
+      "raw": "MATH3304, MATH3305"
+    },
+    "units": "2",
+    "summary": "The course will introduce students to aspects of set theory, model theory, formal logic and computability. Topics will include propositional and predicate calculus, the Zermelo-Fraenkel Axioms, ordinals and cardinals, recursive functions, Turing machines, and Godel's incompleteness theorems."
+  },
+  "MATH4304": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3303"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3303",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7304"
+        }
+      ],
+      "raw": "MATH7304"
+    },
+    "units": "2",
+    "summary": "(offered in even years only) Introduction to algebraic & analytic number theory & elliptic curves."
+  },
+  "MATH3104": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2100",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7134"
+        }
+      ],
+      "raw": "MATH7134"
+    },
+    "units": "2",
+    "summary": ""
+  },
+  "MATH4091": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "STAT3004"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "STAT3004",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7091"
+        }
+      ],
+      "raw": "MATH7091 (co-taught, last offered 2022)"
+    },
+    "units": "2",
+    "summary": "Topics from financial calculus including financial derivatives & arbitrage, asset prices, price dynamics, continuous-time hedging, Brownian motion, Martingales, stochastic integration, solving stochastic differential equations & stochastic control."
+  },
+  "MATH3201": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2000"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2001"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "COSC2500"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2100"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2000 or MATH2001) and (COSC2500 or MATH2100)",
+    "incompat": null,
+    "units": "2",
+    "summary": "Many modern applications of mathematics are carried out on personal computers or super-computers. This course will introduce students to the theory and advanced applications of scientific computing using Matlab. The first section of the course will focus on Taylor series, Newton method, methods of steepest descent, and solution of ordinary differential equations. In the second half, boundary value problems, finite-difference, interpolation and integration will be introduced."
+  },
+  "MATH6010": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "Admission to BSc or BA honours in Mathematics or BMath (honours).",
+    "incompat": null,
+    "units": "6",
+    "summary": "Supervised project on research topic in mathematics, approved by Head, Mathematics. Student selects supervisor and project topic from advertised list, in negotiation with academic staff. Thesis to be written, and oral presentation to be given, on the research topic. Students commencing year project in sem 1 enrol in MATH6010 for sem 1 and sem 2; students commencing year project in sem 2 enrol in MATH6020 for sem 2 and the following sem 1; students completing project within one semester enrol in MATH6030 in Semester 1 or 2."
+  },
+  "MATH2901": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1071"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1051 or MATH1071) and (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7000"
+        }
+      ],
+      "raw": "MATH2000 and MATH7000 and MATH2001"
+    },
+    "units": "2",
+    "summary": "Second order differential equations; undetermined coefficients, variation of parameters. Multi-dimensional calculus; surface & volume integrals, cylindrical, spherical and general coordinate transformations. Stoke's & Green's theorems, applications (flux, heat equations). Linear algebra, diagonalisation, quadratic forms, elementary numerical linear algebra. Taylor series, maxima, minima and saddle points in N-dimensions. Method of least squares for functions. Vector spaces, norms and inner products (for square-integrable functions). Gram-Schmidt orthogonalisation and orthogonal matrices. This is the Advanced Science version of MATH2001."
+  },
+  "MATH2011": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1052 or MATH1072",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ],
+      "raw": "MATH2100"
+    },
+    "units": "1",
+    "summary": "PDE's - Fourier series. Wave, heat, Laplace's equations. Simple maximum and uniqueness principles. Separation of variables in rectangular and polar coordinates."
+  },
+  "MATH6100": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "Admission to BSc or BA honours in Mathematics or BMath (honours).",
+    "incompat": null,
+    "units": "6",
+    "summary": "Supervised project on research topic in mathematics, approved by Head, Mathematics. Student selects supervisor and project topic from advertised list, in negotiation with academic staff. Thesis to be written, and oral presentation to be given, on the research topic. Students commencing year-long project in Semester 1 enrol in MATH6100 for Semester 1 and Semester 2; students commencing year-long project in Semester 2 enrol in MATH6101 for Semester 2 and the following Semester 1; students completing project within one semester enrol in MATH6030 in Semester 1 or 2."
+  },
+  "MATH6015": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "Admission to BSc or BA honours in Mathematics or BMath (honours).",
+    "incompat": null,
+    "units": "6",
+    "summary": "Supervised project on research topic in mathematics, approved by Head, Mathematics. Student selects supervisor and project topic from advertised list, in negotiation with academic staff. Thesis to be written, and oral presentation to be given, on the research topic. Students commencing year project in sem 1 enrol in MATH6010 for sem 1 and sem 2; students commencing year project in sem 2 enrol in MATH6020 for sem 2 and the following sem 1; students completing project within one semester enrol in MATH6030 in Semester 1 or 2."
+  },
+  "MATH4404": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3402"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3402",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7404"
+        }
+      ],
+      "raw": "MATH7404"
+    },
+    "units": "2",
+    "summary": "(offered in semester 2 in odd years only) Metric spaces revisited. Banach spaces: linear operators & functionals; uniform boundedness principle; Hahn-Banach, closed graph & open mapping theorems. Dual spaces, weak & strong convergence; adjoints. Hilbert spaces: orthogonality; projections; Riesz representation theorem. Complete continuity. Fredholm Alternative."
+  },
+  "MATH3103": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2301"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2001 and MATH2301",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7133"
+        }
+      ],
+      "raw": "MATH7133 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Algebraic structures and their representations of relevance to contemporary mathematical physics, including Lie algebras and their applications to quantum mechanics."
+  },
+  "MATH1052": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1050"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1050 or a grade of C or higher in Queensland Year 12 Specialist Mathematics (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7052"
+        }
+      ],
+      "raw": "MATH1072, MATH7052 (co-taught)"
+    },
+    "units": "2",
+    "summary": ""
+  },
+  "MATH2010": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1052 or MATH1072",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ],
+      "raw": "MATH2100"
+    },
+    "units": "1",
+    "summary": "ODE's - Systems: variation of constants, fundamental matrix. Laplace transform, transform for systems, transfer function. Stability, asymptotic stability; phase plane analysis."
+  },
+  "MATH2504": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "STAT1201"
+            },
+            {
+              "op": "COURSE",
+              "code": "STAT1301"
+            },
+            {
+              "op": "COURSE",
+              "code": "STAT2003"
+            },
+            {
+              "op": "COURSE",
+              "code": "STAT2201"
+            },
+            {
+              "op": "COURSE",
+              "code": "STAT2203"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1052 or MATH1072) and (STAT1201 or STAT1301 or STAT2003 or STAT2201 or STAT2203)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7504"
+        }
+      ],
+      "raw": "MATH7504 (co-taught)"
+    },
+    "units": "2",
+    "summary": "This course is designed to build understanding of programming, software architecture, and general software development in the context of mathematical, numerical, symbolic, simulation and data science applications. Students will learn the basic elements of software development in the context of mathematics using a scientific programming language like the Julia language, and also using tools such as git, Unix, and Integrated Development Environments (IDEs). The course teaches students to implement algorithms from numerical mathematics, symbolic mathematics, simulation, and data analysis, all using solid software development practices that allow for organised maintainable and extendable software."
+  },
+  "MATH4303": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2302"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2302",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7303"
+        }
+      ],
+      "raw": "MATH7303"
+    },
+    "units": "2",
+    "summary": "(offered in even years only). Various advanced topics in combinatorics, design theory and graph theory."
+  },
+  "MATH2401": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1071",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2400"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7407"
+        }
+      ],
+      "raw": "MATH2400, MATH7407 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Sequences & series of real functions. Intermediate value theorem. Extreme value theorem. Taylor's theorem & error estimates. Criteria for integrability. Vector functions, continuity & differentials. Implicit & inverse function theorems & applications. Metric spaces: compactness, completeness, continuity, contraction mapping principle. Ascoli-Arzela theorem."
+  },
+  "MATH3202": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1071"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1051 or MATH1071) and (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7232"
+        }
+      ],
+      "raw": "MATH7232 (co-taught)"
+    },
+    "units": "2",
+    "summary": "Techniques and applications of optimisation in operations research, including linear programming, integer programming, dynamic programming and meta-heuristics. Use of Python and the Gurobi optimisation package for linear and integer programming."
+  },
+  "MATH4106": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2301"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2000 or MATH2001 or MATH2301",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7106"
+        }
+      ],
+      "raw": "MATH7106"
+    },
+    "units": "2",
+    "summary": "(Offered in semester 2 in even years only)Advanced techniques of modern applied mathematics & mathematical physics. Selected topics from: asymptotic methods; analytic and algebraic methods in modern statistical mechanics; perturbation theory; operator techniques in Hilbert space, with applications to quantum mechanics and modern field theory; symmetry groups and applications."
+  },
+  "MATH4110": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": null,
+    "units": "2",
+    "summary": ""
+  },
+  "MATH3303": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2301"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2301",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7333"
+        }
+      ],
+      "raw": "MATH7333 (co-taught)"
+    },
+    "units": "2",
+    "summary": "MATH3303 covers key topics in group theory and ring theory, with a view towards commutative algebra, algebraic number theory and representation theory."
+  },
+  "MATH2400": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1051 or MATH1071",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7400"
+        }
+      ],
+      "raw": "MATH7400 (co-taught)"
+    },
+    "units": "2",
+    "summary": "(Note: MATH1052 may be taken concurrently with MATH2400 by students who only took MATH1050 & MATH1051 in 1st year.) Bounded & monotone sequences. Sequences & series of real functions. Intermediate & mean value theorems, iterative procedures. Taylor's Theorem & error estimates. Criteria for integrability. Vector functions, continuity & differentials. Implicit & Inverse Function Theorems & applications."
+  },
+  "MATH1051": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1050"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1050 or a grade of C or higher in Queensland Year 12 Specialist Mathematics (Units 3 and 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7051"
+        }
+      ],
+      "raw": "MATH1071, MATH7051 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Vectors, linear independence, scalar product. Matrices, simultaneous equations, determinants, vector product, eigenvalues, eigenvectors, applications. Equation of straight line and plane. Extreme value theorem, maxima and; minima. Sequences, series, Taylor series, L'Hopital's rules. Techniques of integration, numerical methods, volumes of revolution."
+  },
+  "MATH4107": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3401"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3401",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7107"
+        }
+      ],
+      "raw": "MATH7107"
+    },
+    "units": "2",
+    "summary": "(offered in semester 2 in odd years only). Advanced mathematical techniques and modelling. Selected techniques topics from advanced transform methods and asymptotic analysis. The techniques will be applied to modelling problems selected from heat and mass transport, solid mechanics & fluid dynamics."
+  },
+  "MATH4402": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2400"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2401"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2100 + (MATH2400 or MATH2401)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7402"
+        }
+      ],
+      "raw": "MATH7402"
+    },
+    "units": "2",
+    "summary": "(offered in even years only) Background analysis. Gronwall's inequality. Initial value problems for systems: existence & extendability of solutions. Periodic solutions: first integrals, Morse theorem, attractors; Brouwer's fixed point theorem & degree theory; Floquet's theorem. Perturbation theory: Poincare-Lindstdt method for periodic solutions."
+  },
+  "MATH4202": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3202"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3202",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3205"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7202"
+        }
+      ],
+      "raw": "MATH7202 or MATH3205"
+    },
+    "units": "2",
+    "summary": "MATH4202 will no longer be offered after 2021. Please refer to the alternate course MATH3205 \u00bf Further Topics in Operations Research from 2022 onwards.This course will work with recent papers from the literature to build on and extend the tools and concepts introduced in MATH3202. Topics will be drawn from large scale linear and integer programming, advanced dynamic programming techniques and stochastic optimisation methods."
+  },
+  "MATH6006": {
+    "prereq": {
+      "op": "TEXT",
+      "text": "Permission Head of School"
+    },
+    "coreq": null,
+    "raw": "Permission Head of School",
+    "incompat": null,
+    "units": "2",
+    "summary": "Description: Advanced mathematics topics, not covered in other courses, and available only under special circumstances (for example, course to be given by a visiting lecturer in a specialty area that is not usually available). Endorsement of Head, Mathematics required for enrolment."
+  },
+  "MATH3401": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2400"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2401"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2400 or MATH2401) + (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3901"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7431"
+        }
+      ],
+      "raw": "MATH3901 (advanced version) and MATH7431 (co-taught, last offered 2022)"
+    },
+    "units": "2",
+    "summary": "Analytical functions. Cauchy-Riemann equations. Complex mappings. Cauchy's integral formulas. Morera's, Liouville's and Rouche's theorems. Taylor and Laurent series. Analytic continuation, residues and applications to integration. Boundary-value problems."
+  },
+  "MATH3102": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2100",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7132"
+        }
+      ],
+      "raw": "MATH7132 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Classical methods and models in applied mathematics: dimensional analysis, perturbation methods, traffic models (continuity equation, shocks, Rankine-Hugoniot condition), introduction to continuum mechanics (elasticity, visco-elasticity, fluid dynamics, Navier-Stokes equation)."
+  },
+  "MATH4210": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2100, MATH2001",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4107"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH4201"
+        }
+      ],
+      "raw": "MATH4107, MATH4201"
+    },
+    "units": "2",
+    "summary": "Selected topics in mathematical modelling, scientific computing, perturbation methods, nonlinear dynamics and complex systems."
+  },
+  "MATH3101": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2400"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2401"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2001"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2901"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2010"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2100"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2400 or MATH2401) + (MATH2001 or MATH2901) + (MATH2010 or MATH2100)",
+    "incompat": null,
+    "units": "2",
+    "summary": "Prior to 2022, this course was titled: Bifurcation and Chaos. Local theory of ODEs; n-dimensional linear systems of ODEs and normal forms; stability and bifurcation theory; one-dimensional maps; introduction to chaos."
+  },
+  "MATH4302": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2301"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2302"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2301 + MATH2302",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7302"
+        }
+      ],
+      "raw": "MATH7302"
+    },
+    "units": "2",
+    "summary": "(offered in semester 1 in odd years only) Selected topics from design theory, latin squares, finite geometries."
+  },
+  "MATH1072": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1050"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "A grade of 6 or above in MATH1050; or a grade of B or higher in Queensland Year 12 Specialist Mathematics (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7502"
+        }
+      ],
+      "raw": "MATH1052, MATH7052, MATH7502"
+    },
+    "units": "2",
+    "summary": ""
+  },
+  "MATH2000": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1071"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1051 or MATH1071) + (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        }
+      ],
+      "raw": "MATH2001"
+    },
+    "units": "2",
+    "summary": "MATH2000 will not be offered after 2020 and will be replaced with MATH2001 \u00bf Calculus & Linear Algebra II from 2021 onwards."
+  },
+  "MATH2302": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1061"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1061",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2300"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7308"
+        }
+      ],
+      "raw": "MATH2300, MATH7308 (co-taught)."
+    },
+    "units": "2",
+    "summary": "This course builds on an introductory discrete mathematics course to further develop student's understanding of topics including enumeration, geometric topology, graph theory, design theory and other combinatorial ideas."
+  },
+  "MATH3404": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2901"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2000 or MATH2001 or MATH2901",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7434"
+        }
+      ],
+      "raw": "MATH7434 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Calculus of variations: critical points; Euler equations; transversality; corner conditions; Hamilton equations; Jacobi equations; Legendre sufficient condition; Weierstrass E-function. Control theory: Lagrange, Mayer & Bolza problems; Pontryagin maximal principle, legendre transformations, augmented Hamiltonians, transversality, bang-bang control, linear systems."
+  },
+  "MATH2100": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1052 or MATH1072",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2010"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2011"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7100"
+        }
+      ],
+      "raw": "MATH2010 + MATH2011 MATH7100 (co-taught)"
+    },
+    "units": "2",
+    "summary": "ODE's - Systems: variation of constants, fundamental matrix. Laplace transform, transform for systems, transfer function. Stability, asymptotic stability; phase-lane analysis. PDE's - Fourier series. Wave, heat, Laplace's equations. Simple maximum & uniqueness principles. Separation of variables in rectangular & polar coordinates."
+  },
+  "MATH1040": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7040"
+        }
+      ],
+      "raw": "Grade of B or higher in Qld Year 12 Mathematical Methods (Units 3 & 4) (or equivalent, eg grade of 5 or higher in Mathematical Methods with UQ College or Mathematics with IES Foundation year). MATH7040 (co-taught)."
+    },
+    "units": "2",
+    "summary": ""
+  },
+  "MATH3204": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2901"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7502"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2000 or MATH2001 or MATH2901 or MATH7000 or MATH7502",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7234"
+        }
+      ],
+      "raw": "MATH7234 (co-taught)."
+    },
+    "units": "2",
+    "summary": "At the heart of most modern data scientific methods in general, and machine learning in particular, lie computational techniques involving matrices as well as numerical linear algebra and optimisation algorithms. In this course, students will learn about the theory and practical aspects of many fundamental tools from matrix computations, numerical linear algebra and optimisation. In addition to classical applications, most examples will particularly focus on modern large-scale machine learning problems. Implementations will be done using MATLAB/Python. The students will also be exposed to cutting-edge developments including randomised variants of many classical deterministic methods. Students will be taught a range of analytical and algorithmic tools that are employed in research and industry, such as various matrix types, their properties and factorisations, iterative algorithms for matrix computations such as Krylov subspace methods, various eigen-solvers, elements of convex and non-convex analysis, derivative free as well as first and second-order optimisation methods, constrained and unconstrained optimisation algorithms, and introduction to non-smooth and stochastic optimisation."
+  },
+  "MATH6007": {
+    "prereq": {
+      "op": "TEXT",
+      "text": "Permission Head of School."
+    },
+    "coreq": null,
+    "raw": "Permission Head of School.",
+    "incompat": null,
+    "units": "2",
+    "summary": "Description: Advanced mathematics topics, not covered in other courses, and available only under special circumstances (for example, course to be given by a visiting lecturer in a specialty area that is not usually available). Endorsement of Head, Mathematics required for enrolment."
+  },
+  "MATH1081": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1061"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7861"
+        }
+      ],
+      "raw": "MATH1061, MATH7861"
+    },
+    "units": "2",
+    "summary": "This course covers the topics from MATH1061 in greater depth and breadth. Propositional & predicate logic, valid arguments, methods of proof. Elementary set theory. Elementary graph theory. Relations & functions. Induction & recursive definitions. Counting methods (pigeonhole, inclusion/exclusion). Introductory probability. Binary operations, groups, fields. Applications of finite fields. Elementary number theory."
+  },
+  "MATH4108": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3401"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3401",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4104"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH4106"
+        }
+      ],
+      "raw": "MATH4104, MATH4106"
+    },
+    "units": "2",
+    "summary": "Mathematical structures and symmetries of physical systems. Illustrative examples may be drawn from classical and quantum many-body systems, integrable and (quasi-)exactly solvable models, conformal field theory, and supersymmetry."
+  },
+  "MATH4301": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3303"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3303",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7301"
+        }
+      ],
+      "raw": "MATH7301"
+    },
+    "units": "2",
+    "summary": "(offered in semester 2 in odd years only) Topics from groups, rings, fields, algebraic number theory, category theory & homological algebra, with applications to quantum algebras. Offered in odd numbered years only."
+  },
+  "MATH4405": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2400"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2401"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2400 or MATH2401",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7405"
+        }
+      ],
+      "raw": "MATH7405"
+    },
+    "units": "2",
+    "summary": "(offered in even-numbered years only) Lebesgue integral & measure. Monotone convergence theorem, Fatou's Lemma & Lebesgue dominated convergence theorem. Modes of convergence. Bounded variation. Absolute continuity. Signed measures. Generation of measures. Radon-Nikodym & Riesz representation theorems."
+  },
+  "MATH3205": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3202"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3202",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4202"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7202"
+        }
+      ],
+      "raw": "MATH7202 (co-taught), MATH4202"
+    },
+    "units": "2",
+    "summary": "This course will work with recent papers from the literature to build on and extend the tools and concepts introduced in MATH3202. Topics will be drawn from large scale linear and integer programming, Benders decomposition, Dantzig-Wolfe decomposition, advanced dynamic programming techniques and stochastic optimisation methods."
+  },
+  "MATH3090": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1071"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "STAT2003"
+            },
+            {
+              "op": "COURSE",
+              "code": "STAT2004"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1051 or MATH1071) + (MATH1052 or MATH1072) + (STAT2003 or STAT2004)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7039"
+        }
+      ],
+      "raw": "MATH7039 (co-taught)"
+    },
+    "units": "2",
+    "summary": "Introduction to financial mathematics and its applications. Mathematical models of annuities, equity and fixed-income products, futures and forward contracts, the term structure of interest rates and investment returns."
+  },
+  "MATH4407": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2400"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2401"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2001"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2400 or MATH2401, MATH2001 and MATH2100",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4402"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH4403"
+        }
+      ],
+      "raw": "MATH4402 and MATH4403"
+    },
+    "units": "2",
+    "summary": "Analysis of partial differential equations (Sobolev spaces, existence and regularity of solutions), selected topics in ordinary differential equations (periodic solutions, Poincare-Bendixson theorem, Floquet's theorem)."
+  },
+  "MATH6020": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "Admission to BSc or BA honours in Mathematics or BMath (honours).",
+    "incompat": null,
+    "units": "6",
+    "summary": "Supervised project on research topic in mathematics, approved by Head, Mathematics. Student selects supervisor and project topic from advertised list, in negotiation with academic staff. Thesis to be written, and oral presentation to be given, on the research topic. Students commencing year project in sem 1 enrol in MATH6010 for sem 1 and sem 2; students commencing year project in sem 2 enrol in MATH6020 for sem 2 and the following sem 1; students completing project within one semester enrol in MATH6030 in Semester 1 or 2."
+  },
+  "MATH4408": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2400"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2401"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH2400 or MATH2401",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4405"
+        }
+      ],
+      "raw": "MATH4405"
+    },
+    "units": "2",
+    "summary": "The course is an introduction to modern measure theory. A sound knowledge of measure theory and the Lebesgue integral is a starting point to undertake advanced studies in partial differential equations, nonlinear analysis, the calculus of variations and probability theory. The aim of this course is to learn basic elements of measure theory, including key methods and examples."
+  },
+  "MATH3070": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1052"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1301"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(STAT1201 or STAT1301), (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2070"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7130"
+        }
+      ],
+      "raw": "MATH2070, MATH7130 (co-taught)."
+    },
+    "units": "2",
+    "summary": "The biggest challenge facing our planet is how to maintain and manage our natural systems such as fisheries, forestry and biodiversity in the face of habitat destruction, climate change, pollution and over harvesting. In this course you will learn how to apply deterministic differential and difference equation models to real world examples, and how to solve them using numerical methods. You will also learn how to quantify system uncertainties with the help of statistical and probabilistic methods. Students will be taught a range of methods that are employed in industry, research, consultancies and government to model complex natural resource problems. In the process, students will learn how certain fundamental mathematical concepts such as critical points, orthogonality, eigenvalues and singularity recur in different mathematical frameworks with different but, invariably, vitally important physical interpretations."
+  },
+  "MATH2301": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1071"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1061"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1051 or MATH1071, MATH1061",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2300"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7307"
+        }
+      ],
+      "raw": "MATH2300, MATH7307 (co-taught)"
+    },
+    "units": "2",
+    "summary": "This course provides an introduction to the basics of linear and abstract algebra (including groups, rings and fields) and elementary number theory. Applications are included, enabling students to apply this knowledge in various fields."
+  },
+  "MATH4307": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH3303"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH3401"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH3303, MATH3401",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH4301"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH4304"
+        }
+      ],
+      "raw": "MATH4301, MATH4304"
+    },
+    "units": "2",
+    "summary": "This course covers advanced topics in algebra and number theory, building on third year courses such as abstract algebra and complex analysis. This course will be crucial for those doing Honours study in pure mathematics, especially those interested in algebra and number theory."
+  },
+  "MATH4104": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "PHYS2100"
+        },
+        {
+          "op": "COURSE",
+          "code": "PHYS2101"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH3101"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "PHYS2100 or PHYS2101 or MATH3101",
+    "incompat": null,
+    "units": "2",
+    "summary": "Lagrangian formulation of Newtonian mechanics; Hamiltonian formalism: the Poisson bracket, canonical transformations; integrable systems: Liouville Arnold theorem; canonical perturbation theory; order and chaos in Hamiltonian systems: the KAM theorem, twist maps. Ergodic theory: basic concepts and examples; ergodic theorems and applications; entropy. (offered in odd-numbered years)"
+  },
+  "MATH3403": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2000"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2001"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2901"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2100"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2000 or MATH2001 or MATH2901) + MATH2100",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH7433"
+        }
+      ],
+      "raw": "MATH7433 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Review of separation of variables; classification of second equations; maximum principles for elliptic & parabolic equations. Green's functions & Neumann problem for Laplace & heat equations. Cauchy problem for heat & wave equations; non-linear boundary value problems: successive approximation; contraction principle."
+  },
+  "MATH2001": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1071"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1051 or MATH1071) and (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2901"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH7000"
+        }
+      ],
+      "raw": "MATH2000, MATH2901 (advanced) and MATH7000 (co-taught)."
+    },
+    "units": "2",
+    "summary": "Second order differential equations; undetermined coefficients, variation of parameters. Multi-dimensional calculus; surface & volume integrals, cylindrical, spherical and general coordinate transformations. Stoke's & Green's theorems, applications (flux, heat equations). Linear algebra, diagonalisation, quadratic forms, elementary numerical linear algebra. Taylor series, maxima, minima and saddle points in N-dimensions. Method of least squares for functions. Vector spaces, norms and inner products (for square-integrable functions). Gram-Schmidt orthogonalisation and orthogonal matrices."
+  },
+  "PHYS2100": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "PHYS1001"
+        },
+        {
+          "op": "COURSE",
+          "code": "PHYS1002"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH1052 or MATH1072) + PHYS1001 + PHYS1002",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "PHYS2101"
+        }
+      ],
+      "raw": "PHYS2101"
+    },
+    "units": "2",
+    "summary": "Introduction to Lagrangian & Hamiltonian mechanics including elementary treatment of chaos in Hamiltonian systems. Calculus of variations, constraints, generalised coordinates, geometrical methods. Introduction to Special Relativity including relativistic particle mechanics."
+  },
+  "COSC2500": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "SCIE1000"
+        },
+        {
+          "op": "AND",
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "CSSE1001"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1051"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        },
+        {
+          "op": "AND",
+          "args": [
+            {
+              "op": "N_OF",
+              "n": 1,
+              "args": [
+                {
+                  "op": "COURSE",
+                  "code": "MATH1051"
+                },
+                {
+                  "op": "COURSE",
+                  "code": "MATH1071"
+                }
+              ]
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1072"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "SCIE1000 or (CSSE1001 and MATH1051 or MATH1071) or (MATH1051 or MATH1071 and MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "COSC7500"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH2200"
+        }
+      ],
+      "raw": "MATH2200, COSC7500 (co-taught)."
+    },
+    "units": "2",
+    "summary": "This course provides an introduction to basic numerical methods and computer programming for the solution of a number of classes of scientific problems. The course is interdisciplinary in nature, incorporating a number of case studies in biology, physics, chemistry, and engineering."
+  },
+  "STAT3004": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH2000"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH2001"
+            }
+          ]
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2003"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "(MATH2000 or MATH2001) + STAT2003",
+    "incompat": null,
+    "units": "2",
+    "summary": "Description of probability models. Generating functions & transforms. Limit laws. Markov chains in discrete & continuous time. Stochastic models in epidemics, finance, population biology, genetics, reliability & telecommunications. Simulation methods."
+  },
+  "STAT2201": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1050"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1050 or; a grade of C or higher in Queensland Year 12 Specialist Mathematics (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "ECON1310"
+        },
+        {
+          "op": "COURSE",
+          "code": "ENVM2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1301"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2203"
+        }
+      ],
+      "raw": "ECON1310, ENVM2000, STAT1201, STAT1301 & STAT2203."
+    },
+    "units": "1",
+    "summary": "Statistical models & analyses required for analysing engineering & scientific data, including sampling methods, exploratory data analysis, standard probability models, estimation, hypothesis tests, regression, experimental design."
+  },
+  "STAT1201": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1040"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1040; or a grade of C or higher in Queensland Year 12 Mathematical Methods (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "ECON1310"
+        },
+        {
+          "op": "COURSE",
+          "code": "ENVM2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "HRSS3100"
+        },
+        {
+          "op": "COURSE",
+          "code": "PUBH2007"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1301"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2203"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2701"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT7120"
+        }
+      ],
+      "raw": "ECON1310, ENVM2000, STAT1301, STAT2201, STAT2203, STAT2701, PUBH2007, HRSS3100, STAT7120."
+    },
+    "units": "2",
+    "summary": "Analysis of scientific data and experiments: Design of experiments and ethical research. Data modelling and management. Exploratory data analysis. Randomness and probability. Statistical analysis including linear regression, analysis of variance, logistic regression, categorical data analysis, and non-parametric methods."
+  },
+  "STAT2004": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1301"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2003"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2203"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "((MATH1051 or MATH1071) + (STAT1201, STAT1301 or STAT2201) + (STAT2003 or STAT2203))",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "STAT2002"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2904"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT7004"
+        }
+      ],
+      "raw": "STAT2002, STAT2904, STAT7004"
+    },
+    "units": "2",
+    "summary": "Statistical inference; parametric models; point estimation; properties of estimators; maximum likelihood (ML) and properties of ML estimators; confidence intervals; hypothesis testing; goodness-of-fit tests; Bayesian inference; ANOVA; linear and logistic regression."
+  },
+  "STAT2003": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1051 or MATH1071",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "STAT2001"
+        }
+      ],
+      "raw": "STAT2001"
+    },
+    "units": "2",
+    "summary": "Probability; random variables; probability distributions; Markov processes; statistical analysis & modelling"
+  },
+  "STAT2203": {
+    "prereq": {
+      "op": "N_OF",
+      "n": 1,
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1051"
+        },
+        {
+          "op": "COURSE",
+          "code": "MATH1071"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1051 or MATH1071",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "ECON1310"
+        },
+        {
+          "op": "COURSE",
+          "code": "ECON1320"
+        },
+        {
+          "op": "COURSE",
+          "code": "ENVM2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1301"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2003"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2202"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT7120"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT7203"
+        }
+      ],
+      "raw": "ECON1310, ECON1320, ENVM2000, STAT1201,STAT1301, STAT2003, STAT2201, STAT2202, STAT7120, STAT7203"
+    },
+    "units": "2",
+    "summary": "Probability and Statistics for Engineering: basic probability theory, distributions and properties, sampling methods, EDA, estimation, hypothesis tests, regression, experimental design, transform methods, model construction, reliability, and joint distributions."
+  },
+  "STAT1301": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "MATH1040"
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1040; or a grade of C or higher in Queensland Mathematical Methods (Units 3 & 4) (or equivalent).",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "ECON1310"
+        },
+        {
+          "op": "COURSE",
+          "code": "ENVM2000"
+        },
+        {
+          "op": "COURSE",
+          "code": "HRSS3100"
+        },
+        {
+          "op": "COURSE",
+          "code": "PUBH2007"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT1201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2201"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2203"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT2701"
+        },
+        {
+          "op": "COURSE",
+          "code": "STAT7120"
+        }
+      ],
+      "raw": "ECON1310, ENVM2000, STAT1201, STAT2201, STAT2203, STAT2701, PUBH2007, HRSS3100, STAT7120."
+    },
+    "units": "2",
+    "summary": "This course introduces students to the mathematical and computational aspects of statistical modeling. Emphasis is placed on a precise understanding of randomness and probability distributions, and statistical methods such as estimation, hypothesis testing, analysis of variance, regression and linear models, logistic regression, categorical data analysis and non-parametric methods. The course also covers exploratory data analysis, the design of experiments and ethical research, as well as the importance of critical thinking and communication in the interpretation of results."
+  },
+  "PHYS2101": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "PHYS1001"
+        },
+        {
+          "op": "COURSE",
+          "code": "PHYS1002"
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1052"
+            },
+            {
+              "op": "COURSE",
+              "code": "MATH1072"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "PHYS1001 + PHYS1002 + (MATH1052 or MATH1072)",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "PHYS2100"
+        }
+      ],
+      "raw": "PHYS2100"
+    },
+    "units": "2",
+    "summary": "Introduction to Lagrangian & Hamiltonian mechanics including elementary treatment of chaos in Hamiltonian systems. Calculus of variations, constraints, generalised coordinates, geometrical methods. Introduction to Special Relativity including relativistic particle mechanics. Advanced topics."
+  },
+  "CSSE1001": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "COMP1502"
+        },
+        {
+          "op": "COURSE",
+          "code": "CSSE7030"
+        },
+        {
+          "op": "COURSE",
+          "code": "ENGG1001"
+        }
+      ],
+      "raw": "COMP1502, CSSE7030, ENGG1001"
+    },
+    "units": "2",
+    "summary": "Introduction to Software Engineering through programming with particular focus on the fundamentals of computing and programming, using an exploratory problem-based approach. Building abstractions with procedures, data and objects; data modelling; designing, coding and debugging programs of increasing complexity"
+  },
+  "PHYS1001": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "PHYS1171"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1040"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "PHYS1171 or a grade of C or higher in Queensland Year 12 Physics (Units 3 & 4) (or equivalent); and MATH1040 or a grade of C or higher in Queensland Year 12 Mathematical Methods (Units 3 & 4) (or equivalent).",
+    "incompat": null,
+    "units": "2",
+    "summary": "Nature of physics, kinematics, dynamics, conservation laws, rigid body rotation, oscillations, fluids and elasticity, thermodynamics, arrow of time, heat engines, laboratory experiments & error analysis."
+  },
+  "PHYS1002": {
+    "prereq": {
+      "op": "AND",
+      "args": [
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "MATH1050"
+            }
+          ]
+        },
+        {
+          "op": "N_OF",
+          "n": 1,
+          "args": [
+            {
+              "op": "COURSE",
+              "code": "PHYS1171"
+            }
+          ]
+        }
+      ]
+    },
+    "coreq": null,
+    "raw": "MATH1050 or a grade of C or higher in Queensland Year 12 Specialist Mathematics (Units 3 & 4) (or equivalent); and PHYS1171 or a grade of C or higher in Queensland Year 12 Physics (Units 3 & 4) (or equivalent).",
+    "incompat": null,
+    "units": "2",
+    "summary": "Electricity, magnetism, optics, quantum physics, relativity. Laboratory experiments."
+  },
+  "SCIE1000": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "SCIE1100"
+        }
+      ],
+      "raw": "SCIE1100"
+    },
+    "units": "2",
+    "summary": "This foundation course in science introduces students to the broad range of mathematical, analytical, conceptual and computational tools employed by scientists to develop, analyse and interpret models of scientific processes. To emphasize the importance and generality of these tools, a number of key contemporary topics in science will be studied, including climate change, population dynamics, drugs and pharmacokinetics, and epidemics. The course will demonstrate how and why mathematical models underpin modern science, and students will learn how to develop and analyse such models. The course also introduces computer programming (using the language Python) as a vital tool in modern scientific modelling. Students will be introduced to some fundamental philosophical issues in science, gaining an appreciation of some of the assumptions that underlie science and the supposed scientific method, reinforcing the importance of critical thinking, creativity and quantitative scientific skills."
+  },
+  "PHYS1171": {
+    "prereq": null,
+    "coreq": null,
+    "raw": "",
+    "incompat": {
+      "op": "NONE_OF",
+      "args": [
+        {
+          "op": "COURSE",
+          "code": "PHYS1001"
+        },
+        {
+          "op": "COURSE",
+          "code": "PHYS1002"
+        },
+        {
+          "op": "COURSE",
+          "code": "PHYS1170"
+        }
+      ],
+      "raw": "PHYS1170 or (a pass in PHYS1001 or PHYS1002)"
+    },
+    "units": "2",
+    "summary": "An algebra-based introduction to Physics in a biological context. Topics include forces, motion, thermodynamics, waves, fluids, electricity and biomedical sensing."
+  }
+}
