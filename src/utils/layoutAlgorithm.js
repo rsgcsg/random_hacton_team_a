@@ -61,42 +61,197 @@ export const calculateCourseLayout = (courses) => {
     
     return maxLevel
   }
-  
+
   // Calculate levels for all courses
   courses.forEach(course => {
     if (!visited.has(course.id)) {
       calculateLevel(course.id)
     }
   })
-  
-  // Group courses by level
+
+  // Group courses by level and identify OR groups for horizontal clustering
   const levelGroups = new Map()
+  const orGroups = new Map() // Map to store courses belonging to the same OR group
+
   courses.forEach(course => {
     const level = levels.get(course.id) || 0
     if (!levelGroups.has(level)) {
       levelGroups.set(level, [])
     }
     levelGroups.get(level).push(course)
+
+    // Identify OR groups
+    if (course.Prerequisite && course.Prerequisite.prerequisites) {
+      course.Prerequisite.prerequisites.forEach(group => {
+        if (group.type === 'OR') {
+          const groupKey = JSON.stringify(group.items.map(item => item.value).sort())
+          if (!orGroups.has(groupKey)) {
+            orGroups.set(groupKey, new Set())
+          }
+          group.items.forEach(item => {
+            if (item.type === 'course') {
+              orGroups.get(groupKey).add(item.value)
+            }
+          })
+        }
+      })
+    }
   })
-  
+
   // Position courses
   const positions = new Map()
-  const levelHeight = 200
+  const levelHeight = 350 // Increased height to allow more vertical spread
   const courseWidth = 280
-  
+  const courseHeight = 100 // Approximate height of a course node
+  const horizontalSpacing = 50 // Increased horizontal spacing
+
   Array.from(levelGroups.keys()).sort((a, b) => a - b).forEach(level => {
-    const coursesInLevel = levelGroups.get(level)
-    const totalWidth = coursesInLevel.length * courseWidth
-    const startX = -totalWidth / 2
-    
-    coursesInLevel.forEach((course, index) => {
+    let coursesInLevel = levelGroups.get(level)
+
+    // Apply horizontal clustering for OR groups
+    const clusteredCourses = []
+    const placedCourseIds = new Set()
+
+    orGroups.forEach(courseIdsInOrGroup => {
+      const orCoursesInLevel = coursesInLevel.filter(course => 
+        courseIdsInOrGroup.has(course.id) && !placedCourseIds.has(course.id)
+      )
+      if (orCoursesInLevel.length > 0) {
+        clusteredCourses.push(...orCoursesInLevel.sort((a, b) => a.id.localeCompare(b.id)))
+        orCoursesInLevel.forEach(c => placedCourseIds.add(c.id))
+      }
+    })
+
+    // Add remaining courses
+    coursesInLevel.forEach(course => {
+      if (!placedCourseIds.has(course.id)) {
+        clusteredCourses.push(course)
+      }
+    })
+
+    // Sort the clustered courses for consistent positioning
+    clusteredCourses.sort((a, b) => {
+      // Prioritize OR grouped courses, then by ID
+      const aInOr = Array.from(orGroups.values()).some(g => g.has(a.id))
+      const bInOr = Array.from(orGroups.values()).some(g => g.has(b.id))
+
+      if (aInOr && !bInOr) return -1
+      if (!aInOr && bInOr) return 1
+      return a.id.localeCompare(b.id)
+    })
+
+    const totalWidth = clusteredCourses.length * courseWidth + (clusteredCourses.length - 1) * horizontalSpacing
+    let currentX = -totalWidth / 2
+
+    // Introduce a simple force-directed adjustment for horizontal positioning
+    // This is a simplified approach, a full force-directed algorithm would be more complex
+    const adjustedPositions = new Map()
+    clusteredCourses.forEach(course => {
+      adjustedPositions.set(course.id, currentX + (courseWidth / 2) + (Math.random() - 0.5) * 100) // Add more randomness
+      currentX += courseWidth + horizontalSpacing
+    })
+
+    // Apply a simple force-directed adjustment to minimize edge crossings
+    // This is a very basic heuristic and not a full force-directed algorithm
+    const forceFactor = 0.05 // Reduced force factor for more stability
+    const dampingFactor = 0.9 // Damping to prevent overshooting
+    const maxIterations = 1000 // Further increased iterations for better convergence
+    const maxForce = 900 // Further increased cap for the maximum force applied in one step
+
+    for (let i = 0; i < maxIterations; i++) {
+      clusteredCourses.forEach(course => {
+        let totalForce = 0
+        let connectedCount = 0
+
+        // Attract to prerequisites
+        courses.forEach(prereqCourse => {
+          if (prereqCourse.Prerequisite && prereqCourse.Prerequisite.prerequisites) {
+            const hasPrerequisite = prereqCourse.Prerequisite.prerequisites.some(group => 
+              group.items.some(item => item.type === 'course' && item.value === course.id)
+            )
+            if (hasPrerequisite) {
+              const prereqX = positions.get(prereqCourse.id)?.x || 0
+              totalForce += (prereqX - adjustedPositions.get(course.id)) * forceFactor
+              connectedCount++
+            }
+          }
+        })
+
+        // Attract to dependents
+        courses.forEach(dependentCourse => {
+          if (course.Prerequisite && course.Prerequisite.prerequisites) {
+            const isPrerequisiteFor = course.Prerequisite.prerequisites.some(group => 
+              group.items.some(item => item.type === 'course' && item.value === dependentCourse.id)
+            )
+            if (isPrerequisiteFor) {
+              const dependentX = positions.get(dependentCourse.id)?.x || 0
+              totalForce += (dependentX - adjustedPositions.get(course.id)) * forceFactor
+              connectedCount++
+            }
+          }
+        })
+
+        // Repel from other courses in the same level to prevent overlap
+        clusteredCourses.forEach(otherCourse => {
+          if (course.id !== otherCourse.id) {
+            const distanceX = adjustedPositions.get(course.id) - adjustedPositions.get(otherCourse.id)
+            const distanceY = (level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 50) - (level * levelHeight + (clusteredCourses.indexOf(otherCourse) % 2 === 0 ? 1 : -1) * 75)
+            const minDistanceX = courseWidth + 200 // Further increased minimum horizontal distance to avoid overlap
+            const minDistanceY = courseHeight + 150 // Further increased minimum vertical distance to avoid overlap
+
+            if (Math.abs(distanceX) < minDistanceX && Math.abs(distanceY) < minDistanceY) {
+              // Overlap detected, apply strong repulsion in both dimensions
+              const overlapX = minDistanceX - Math.abs(distanceX)
+              const overlapY = minDistanceY - Math.abs(distanceY)
+
+              if (overlapX > 0 && overlapY > 0) { // Only if there's actual overlap in both dimensions
+                const repulsionForceX = overlapX * 30 // Even Stronger linear repulsion
+                const repulsionForceY = overlapY * 30
+
+                if (distanceX > 0) {
+                  totalForce += repulsionForceX
+                } else {
+                  totalForce -= repulsionForceX
+                }
+
+                if (distanceY > 0) {
+                  // Apply vertical repulsion force by modifying the current position
+                  const currentPos = positions.get(course.id) || { x: adjustedPositions.get(course.id), y: level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 75 }
+                  positions.set(course.id, { ...currentPos, y: currentPos.y + repulsionForceY })
+                } else {
+                  // Apply vertical repulsion force by modifying the current position
+                  const currentPos = positions.get(course.id) || { x: adjustedPositions.get(course.id), y: level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 75 }
+                  positions.set(course.id, { ...currentPos, y: currentPos.y - repulsionForceY })
+                }
+              }
+            }
+          }
+        })
+
+        let deltaX = 0
+        if (connectedCount > 0) {
+          deltaX = (totalForce / connectedCount) * dampingFactor
+        } else {
+          deltaX = totalForce * dampingFactor
+        }
+
+        // Cap the force to prevent extreme movements
+        deltaX = Math.max(-maxForce, Math.min(maxForce, deltaX))
+
+        adjustedPositions.set(course.id, adjustedPositions.get(course.id) + deltaX)
+      })
+    }
+
+    clusteredCourses.forEach((course, index) => {
+      // Introduce vertical offset to break strict rows
+      const verticalOffset = (index % 2 === 0 ? 1 : -1) * 100 // Increased vertical offset
       positions.set(course.id, {
-        x: startX + (index * courseWidth) + (courseWidth / 2),
-        y: level * levelHeight
+        x: adjustedPositions.get(course.id),
+        y: level * levelHeight + verticalOffset
       })
     })
   })
-  
+
   return positions
 }
 
@@ -156,4 +311,6 @@ export const findPrerequisitePaths = (targetCourseId, courses) => {
   
   return Array.from(paths)
 }
+
+
 
