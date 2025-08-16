@@ -30,10 +30,15 @@ import argparse
 import asyncio
 import contextlib
 import csv
+import sys
 import json
 import random
 import re
 import time
+import os
+from flask import Flask
+from flask_cors import CORS
+from course import course_bp
 from collections import deque
 from pathlib import Path
 from typing import Any
@@ -77,6 +82,11 @@ HEADERS = {
 COURSE_LINK_RE = re.compile(r"course\.html\?course_code=([A-Z]{4}\d{4}[A-Z]?)")
 COURSE_CODE_RE = re.compile(r"\b([A-Z]{4}\d{4}[A-Z]?)\b")
 
+# ============================== Router ==============================
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+app = Flask(__name__)
+CORS(app)
+app.register_blueprint(course_bp, url_prefix='/api')
 
 # ============================== Utils ==============================
 
@@ -1091,3 +1101,5 @@ if __name__ == "__main__":
             burst=args.burst,
         )
     )
+    
+    app.run(host='0.0.0.0', port=5001, debug=True)
