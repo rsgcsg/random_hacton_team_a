@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button.jsx'
 import { Checkbox } from '@/components/ui/checkbox.jsx'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Switch } from '@/components/ui/switch.jsx'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import { ChevronDown, ChevronRight, X } from 'lucide-react'
 import SearchBar from './SearchBar'
 
 const Sidebar = ({
@@ -23,6 +23,8 @@ const Sidebar = ({
     majors: true,
     courses: true
   })
+  
+  const [isOpen, setIsOpen] = useState(true) // Sidebar open/close
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -55,8 +57,27 @@ const Sidebar = ({
     }
   }
 
+  if (!isOpen) {
+    return (
+      <button
+        className="absolute top-4 left-4 p-2 bg-primary text-white rounded shadow z-50"
+        onClick={() => setIsOpen(true)}
+      >
+        Open Sidebar
+      </button>
+    )
+  }
+
   return (
-    <div className="w-80 bg-card border-r border-border p-4 overflow-y-auto">
+    <div className="w-80 bg-card border-r border-border p-4 overflow-y-auto relative">
+      {/* Close Button */}
+      <button
+        onClick={() => setIsOpen(false)}
+        className="absolute top-2 right-2 p-1 rounded hover:bg-gray-200 z-50"
+      >
+        <X size={16} color="black" />
+      </button>
+
       <h1 className="text-2xl font-bold mb-6">Course Mind Map</h1>
       
       {/* Search Bar */}
