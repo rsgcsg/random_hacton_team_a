@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
+  
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import CourseNode from './CourseNode'
@@ -123,14 +124,14 @@ const MindMap = ({
         data: {
           course,
           color: getCourseColor(course),
-          isSelected: selectedCourse?.id === course.id,
+          isSelected: selectedCourse?.id === course.id, // can still highlight
           onClick: () => setSelectedCourse(course)
         }
       }
     })
     
     setNodes(courseNodes)
-  }, [filteredCourses, getCourseColor, selectedCourse, setSelectedCourse, setNodes])
+  }, [filteredCourses, getCourseColor, setNodes])
 
   // Create edges from prerequisites
   useEffect(() => {
@@ -249,6 +250,7 @@ const MindMap = ({
         nodeTypes={nodeTypes}
         fitView
         className="bg-background"
+        onPaneClick={() => setSelectedCourse(null)}
       >
         <Controls />
         <MiniMap />
