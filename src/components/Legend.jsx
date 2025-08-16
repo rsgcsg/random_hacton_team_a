@@ -1,14 +1,31 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Info } from 'lucide-react'
+import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.jsx"
+import { Info, X } from "lucide-react"
 
 const Legend = () => {
+  const [open, setOpen] = useState(true)
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-card/90 backdrop-blur-sm shadow-md hover:bg-card"
+      >
+        <Info size={20} />
+      </button>
+    )
+  }
+
   return (
     <Card className="absolute top-4 right-4 w-64 z-10 bg-card/95 backdrop-blur-sm">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-2 flex justify-between items-center">
         <CardTitle className="flex items-center text-sm">
           <Info size={16} className="mr-2" />
           Legend
         </CardTitle>
+        <button onClick={() => setOpen(false)} className="p-1 rounded hover:bg-muted">
+          <X size={16} />
+        </button>
       </CardHeader>
       <CardContent className="space-y-3 text-xs">
         <div>
@@ -21,6 +38,9 @@ const Legend = () => {
             <li>• Major selection</li>
             <li>• Degree selection (lowest priority)</li>
           </ul>
+          <p className="text-muted-foreground">
+            If a course is in multiple programs, show the colour of all the programs
+          </p>
         </div>
         
         <div>
@@ -28,15 +48,15 @@ const Legend = () => {
           <div className="space-y-1">
             <div className="flex items-center">
               <div className="w-4 h-0.5 bg-black mr-2"></div>
-              <span className="text-muted-foreground">AND requirements</span>
+              <span className="text-muted-foreground">The prerequisites must be satisfied</span>
             </div>
             <div className="flex items-center">
               <div className="w-4 h-0.5 bg-red-400 mr-2"></div>
-              <span className="text-muted-foreground">OR requirements (colored)</span>
+              <span className="text-muted-foreground">The prerequisites can be satified by multiple ways (colored)</span>
             </div>
             <div className="flex items-center">
               <div className="w-4 h-0.5 bg-orange-500 mr-2"></div>
-              <span className="text-muted-foreground">Highlighted path</span>
+              <span className="text-muted-foreground">Highlighted path of a particular course you selected</span>
             </div>
           </div>
         </div>
@@ -56,4 +76,6 @@ const Legend = () => {
 }
 
 export default Legend
+
+
 
