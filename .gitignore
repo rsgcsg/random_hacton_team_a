@@ -1,2 +1,22 @@
+# dependencies
 node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# production build
 dist/
+build/
+
+# environment variables
+.env
+.env.*.local
+
+# system files
+.DS_Store
+Thumbs.db
+
+# IDEs/editors
+.vscode/
+.idea/
+*.sw?
