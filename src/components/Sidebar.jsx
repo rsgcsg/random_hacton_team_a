@@ -83,7 +83,7 @@ const Sidebar = ({
         <X size={16} color="black" />
       </button>
 
-      <h1 className="text-2xl font-bold mb-6">Course Mind Map</h1>
+      <h1 className="text-2xl font-bold mb-6">UQ Course Visualiser</h1>
 
       {/* Search Bar */}
       <SearchBar data={data} onCourseSelect={onCourseSelect} />

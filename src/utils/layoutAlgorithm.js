@@ -1,4 +1,3 @@
-// Improved layout algorithm with better OR group horizontal positioning
 export const calculateCourseLayout = (courses) => {
   // Create a map of course dependencies
   const dependencyMap = new Map()
@@ -34,8 +33,9 @@ export const calculateCourseLayout = (courses) => {
   const visiting = new Set()
 
   const calculateLevel = (courseId) => {
+    // Base case
     if (visiting.has(courseId)) {
-      return 0 // Circular dependency
+      return 0
     }
 
     if (visited.has(courseId)) {
@@ -101,7 +101,7 @@ export const calculateCourseLayout = (courses) => {
 
   // Position courses with improved OR group handling
   const positions = new Map()
-  const levelHeight = 300
+  const levelHeight = 400
   const courseWidth = 300
   const minHorizontalSpacing = 50
   const orGroupSpacing = 20
