@@ -1,459 +1,562 @@
-// Enhanced layout algorithm to position courses based on prerequisites with arrow-aware optimization
+// Advanced layout algorithm with arrow-aware positioning and flexible routing
 export const calculateCourseLayout = (courses) => {
-  // Create a map of course dependencies
-  const dependencyMap = new Map()
-  const reverseDependencyMap = new Map()
-  
-  // Initialize maps
-  courses.forEach(course => {
-    dependencyMap.set(course.id, new Set())
-    reverseDependencyMap.set(course.id, new Set())
-  })
-  
-  // Build dependency relationships from course prerequisites
-  courses.forEach(course => {
-    if (!course.Prerequisite || !course.Prerequisite.prerequisites) return
+  try {
+    console.log("Advanced Layout Algorithm: Starting calculation with", courses.length, "courses");
     
-    const targetCourse = course.id
-    
-    const extractDependencies = (group) => {
-      if (group.type === 'course') {
-        dependencyMap.get(targetCourse)?.add(group.value)
-        reverseDependencyMap.get(group.value)?.add(targetCourse)
-      } else if (group.type === 'AND' || group.type === 'OR') {
-        group.items.forEach(item => extractDependencies(item))
-      }
+    // Validate input
+    if (!Array.isArray(courses) || courses.length === 0) {
+      console.error("Layout Algorithm: Invalid courses input", courses);
+      return new Map();
     }
-    
-    course.Prerequisite.prerequisites.forEach(group => extractDependencies(group))
-  })
-  
-  // Calculate levels using topological sort
-  const levels = new Map()
-  const visited = new Set()
-  const visiting = new Set()
-  
-  const calculateLevel = (courseId) => {
-    if (visiting.has(courseId)) {
-      // Circular dependency detected, assign level 0
-      return 0
-    }
-    
-    if (visited.has(courseId)) {
-      return levels.get(courseId) || 0
-    }
-    
-    visiting.add(courseId)
-    
-    const dependencies = dependencyMap.get(courseId) || new Set()
-    let maxLevel = 0
-    
-    dependencies.forEach(depId => {
-      if (courses.find(c => c.id === depId)) {
-        const depLevel = calculateLevel(depId)
-        maxLevel = Math.max(maxLevel, depLevel + 1)
-      }
-    })
-    
-    visiting.delete(courseId)
-    visited.add(courseId)
-    levels.set(courseId, maxLevel)
-    
-    return maxLevel
-  }
 
-  // Calculate levels for all courses
-  courses.forEach(course => {
-    if (!visited.has(course.id)) {
-      calculateLevel(course.id)
-    }
-  })
-
-  // Group courses by level and identify OR groups for horizontal clustering
-  const levelGroups = new Map()
-  const orGroups = new Map() // Map to store courses belonging to the same OR group
-
-  courses.forEach(course => {
-    const level = levels.get(course.id) || 0
-    if (!levelGroups.has(level)) {
-      levelGroups.set(level, [])
-    }
-    levelGroups.get(level).push(course)
-
-    // Identify OR groups
-    if (course.Prerequisite && course.Prerequisite.prerequisites) {
-      course.Prerequisite.prerequisites.forEach(group => {
-        if (group.type === 'OR') {
-          const groupKey = JSON.stringify(group.items.map(item => item.value).sort())
-          if (!orGroups.has(groupKey)) {
-            orGroups.set(groupKey, new Set())
-          }
-          group.items.forEach(item => {
-            if (item.type === 'course') {
-              orGroups.get(groupKey).add(item.value)
-            }
-          })
-        }
-      })
-    }
-  })
-
-  // Arrow intersection detection utilities
-  const calculateArrowPath = (sourcePos, targetPos) => {
-    // Calculate bezier control points for curved arrows
-    const deltaX = targetPos.x - sourcePos.x
-    const deltaY = targetPos.y - sourcePos.y
+    // Phase 1: Build dependency and similarity maps
+    const dependencyMap = new Map();
+    const reverseDependencyMap = new Map();
+    const similarityGroups = new Map(); // OR groups for similarity clustering
+    const arrowPaths = new Map(); // Track arrow paths for intersection avoidance
     
-    // Control points for bezier curve
-    const controlPoint1 = {
-      x: sourcePos.x + deltaX * 0.25,
-      y: sourcePos.y + Math.abs(deltaX) * 0.3
-    }
+    // Initialize maps
+    courses.forEach((course) => {
+      if (!course || !course.id) return;
+      dependencyMap.set(course.id, new Set());
+      reverseDependencyMap.set(course.id, new Set());
+    });
     
-    const controlPoint2 = {
-      x: targetPos.x - deltaX * 0.25,
-      y: targetPos.y - Math.abs(deltaX) * 0.3
-    }
+    console.log("Advanced Layout Algorithm: Initialized dependency maps for", dependencyMap.size, "courses");
     
-    return {
-      start: sourcePos,
-      end: targetPos,
-      control1: controlPoint1,
-      control2: controlPoint2,
-      boundingBox: {
-        minX: Math.min(sourcePos.x, targetPos.x, controlPoint1.x, controlPoint2.x),
-        maxX: Math.max(sourcePos.x, targetPos.x, controlPoint1.x, controlPoint2.x),
-        minY: Math.min(sourcePos.y, targetPos.y, controlPoint1.y, controlPoint2.y),
-        maxY: Math.max(sourcePos.y, targetPos.y, controlPoint1.y, controlPoint2.y)
-      }
-    }
-  }
-
-  const arrowsIntersect = (arrow1, arrow2) => {
-    // Simple bounding box intersection check
-    const box1 = arrow1.boundingBox
-    const box2 = arrow2.boundingBox
-    
-    return !(box1.maxX < box2.minX || box2.maxX < box1.minX || 
-             box1.maxY < box2.minY || box2.maxY < box1.minY)
-  }
-
-  const calculateArrowIntersections = (positions) => {
-    const arrows = []
-    let intersectionCount = 0
-    
-    // Generate all arrows based on current positions
-    courses.forEach(course => {
-      if (!course.Prerequisite || !course.Prerequisite.prerequisites) return
+    // Build dependency relationships and identify similarity groups
+    courses.forEach((course) => {
+      if (!course || !course.id || !course.Prerequisite || !course.Prerequisite.prerequisites) return;
       
-      const targetPos = positions.get(course.id)
-      if (!targetPos) return
+      const targetCourse = course.id;
       
-      const extractArrows = (group) => {
-        if (group.type === 'course') {
-          const sourcePos = positions.get(group.value)
-          if (sourcePos) {
-            arrows.push(calculateArrowPath(sourcePos, targetPos))
-          }
-        } else if (group.type === 'AND' || group.type === 'OR') {
-          group.items.forEach(item => extractArrows(item))
-        }
-      }
-      
-      course.Prerequisite.prerequisites.forEach(group => extractArrows(group))
-    })
-    
-    // Count intersections
-    for (let i = 0; i < arrows.length; i++) {
-      for (let j = i + 1; j < arrows.length; j++) {
-        if (arrowsIntersect(arrows[i], arrows[j])) {
-          intersectionCount++
-        }
-      }
-    }
-    
-    return { arrows, intersectionCount }
-  }
-
-  // Position courses with enhanced algorithm
-  const positions = new Map()
-  const levelHeight = 280 // Optimized height for better arrow spacing
-  const courseWidth = 300
-  const courseHeight = 100
-  const horizontalSpacing = 40 // Optimized spacing
-
-  Array.from(levelGroups.keys()).sort((a, b) => a - b).forEach(level => {
-    let coursesInLevel = levelGroups.get(level)
-
-    // Apply horizontal clustering for OR groups
-    const clusteredCourses = []
-    const placedCourseIds = new Set()
-
-    orGroups.forEach(courseIdsInOrGroup => {
-      const orCoursesInLevel = coursesInLevel.filter(course => 
-        courseIdsInOrGroup.has(course.id) && !placedCourseIds.has(course.id)
-      )
-      if (orCoursesInLevel.length > 0) {
-        clusteredCourses.push(...orCoursesInLevel.sort((a, b) => a.id.localeCompare(b.id)))
-        orCoursesInLevel.forEach(c => placedCourseIds.add(c.id))
-      }
-    })
-
-    // Add remaining courses
-    coursesInLevel.forEach(course => {
-      if (!placedCourseIds.has(course.id)) {
-        clusteredCourses.push(course)
-      }
-    })
-
-    // Sort the clustered courses for consistent positioning
-    clusteredCourses.sort((a, b) => {
-      const aInOr = Array.from(orGroups.values()).some(g => g.has(a.id))
-      const bInOr = Array.from(orGroups.values()).some(g => g.has(b.id))
-
-      if (aInOr && !bInOr) return -1
-      if (!aInOr && bInOr) return 1
-      return a.id.localeCompare(b.id)
-    })
-
-    const totalWidth = clusteredCourses.length * courseWidth + (clusteredCourses.length - 1) * horizontalSpacing
-    let currentX = -totalWidth / 2
-
-    // Initial positioning with organic distribution
-    const adjustedPositions = new Map()
-    clusteredCourses.forEach((course, index) => {
-      // Add slight wave pattern for organic look
-      const waveOffset = Math.sin(index * 0.7) * 60
-      adjustedPositions.set(course.id, currentX + (courseWidth / 2) + waveOffset)
-      currentX += courseWidth + horizontalSpacing
-    })
-
-    // PHASE 1: Node-first optimization (prioritized)
-    const nodeOptimizationIterations = 800
-    const nodeForceFactor = 0.08
-    const nodeDampingFactor = 0.85
-    const maxNodeForce = 600
-
-    for (let i = 0; i < nodeOptimizationIterations; i++) {
-      clusteredCourses.forEach(course => {
-        let totalForce = 0
-        let connectedCount = 0
-
-        // Attract to prerequisites and dependents
-        courses.forEach(otherCourse => {
-          const dependencies = dependencyMap.get(course.id) || new Set()
-          const reverseDependencies = reverseDependencyMap.get(course.id) || new Set()
-          
-          if (dependencies.has(otherCourse.id)) {
-            const otherX = adjustedPositions.get(otherCourse.id) || 0
-            totalForce += (otherX - adjustedPositions.get(course.id)) * nodeForceFactor
-            connectedCount++
-          }
-          
-          if (reverseDependencies.has(otherCourse.id)) {
-            const otherX = adjustedPositions.get(otherCourse.id) || 0
-            totalForce += (otherX - adjustedPositions.get(course.id)) * nodeForceFactor
-            connectedCount++
-          }
-        })
-
-        // Strong repulsion to prevent node overlap
-        clusteredCourses.forEach(otherCourse => {
-          if (course.id !== otherCourse.id) {
-            const distance = adjustedPositions.get(course.id) - adjustedPositions.get(otherCourse.id)
-            const minDistance = courseWidth + 80
-            
-            if (Math.abs(distance) < minDistance) {
-              const repulsionForce = (minDistance - Math.abs(distance)) * 120
-              totalForce += distance > 0 ? repulsionForce : -repulsionForce
-              connectedCount++
-            }
-          }
-        })
-
-        // Apply node forces
-        if (connectedCount > 0) {
-          let deltaX = (totalForce / connectedCount) * nodeDampingFactor
-          deltaX = Math.max(-maxNodeForce, Math.min(maxNodeForce, deltaX))
-          adjustedPositions.set(course.id, adjustedPositions.get(course.id) + deltaX)
-        }
-      })
-    }
-
-    // Set initial positions for this level
-    clusteredCourses.forEach((course, index) => {
-      const verticalOffset = Math.sin(index * 0.5) * 80 // Organic vertical distribution
-      positions.set(course.id, {
-        x: adjustedPositions.get(course.id),
-        y: level * levelHeight + verticalOffset
-      })
-    })
-
-    // PHASE 2: Arrow-aware optimization (secondary priority)
-    const arrowOptimizationIterations = 300
-    const arrowForceFactor = 0.04
-    const arrowDampingFactor = 0.75
-
-    let bestIntersectionCount = Infinity
-    let bestPositions = new Map(positions)
-
-    for (let i = 0; i < arrowOptimizationIterations; i++) {
-      // Calculate current arrow intersections
-      const { intersectionCount } = calculateArrowIntersections(positions)
-      
-      // Track best configuration
-      if (intersectionCount < bestIntersectionCount) {
-        bestIntersectionCount = intersectionCount
-        bestPositions = new Map(positions)
-      }
-      
-      // Stop if we achieve minimal intersections
-      if (intersectionCount <= 2) break
-
-      // Apply arrow-aware forces
-      clusteredCourses.forEach(course => {
-        let arrowForce = 0
-        let arrowForceCount = 0
-
-        // Calculate force to reduce arrow intersections
-        const currentPos = positions.get(course.id)
-        if (!currentPos) return
-
-        // Test small position adjustments to see if they reduce intersections
-        const testPositions = new Map(positions)
-        const testOffsets = [-30, -15, 15, 30]
+      const extractDependenciesAndSimilarity = (group, depth = 0, groupPath = []) => {
+        if (depth > 10) return;
+        if (!group || typeof group !== "object") return;
         
-        let bestOffset = 0
-        let minIntersections = intersectionCount
-
-        testOffsets.forEach(offset => {
-          testPositions.set(course.id, { ...currentPos, x: currentPos.x + offset })
-          const { intersectionCount: testIntersections } = calculateArrowIntersections(testPositions)
-          
-          if (testIntersections < minIntersections) {
-            minIntersections = testIntersections
-            bestOffset = offset
+        if (group.type === "course") {
+          if (group.value && typeof group.value === "string") {
+            dependencyMap.get(targetCourse)?.add(group.value);
+            reverseDependencyMap.get(group.value)?.add(targetCourse);
           }
-        })
-
-        // Apply the best offset as a force
-        if (bestOffset !== 0) {
-          arrowForce += bestOffset * arrowForceFactor
-          arrowForceCount++
+        } else if (group.type === "AND") {
+          if (Array.isArray(group.items)) {
+            group.items.forEach((item, index) => 
+              extractDependenciesAndSimilarity(item, depth + 1, [...groupPath, "AND", index])
+            );
+          }
+        } else if (group.type === "OR") {
+          // Identify similarity groups from OR relationships
+          if (Array.isArray(group.items)) {
+            const orCourses = group.items
+              .filter(item => item.type === "course" && item.value)
+              .map(item => item.value);
+            
+            if (orCourses.length > 1) {
+              const groupKey = `${targetCourse}-OR-${depth}`;
+              similarityGroups.set(groupKey, new Set(orCourses));
+            }
+            
+            group.items.forEach((item, index) => 
+              extractDependenciesAndSimilarity(item, depth + 1, [...groupPath, "OR", index])
+            );
+          }
         }
-
-        // Apply arrow forces with damping
-        if (arrowForceCount > 0) {
-          let deltaX = (arrowForce / arrowForceCount) * arrowDampingFactor
-          deltaX = Math.max(-50, Math.min(50, deltaX)) // Smaller force cap for arrow optimization
-          
-          const newX = currentPos.x + deltaX
-          positions.set(course.id, { ...currentPos, x: newX })
+      };
+      
+      course.Prerequisite.prerequisites.forEach((group, index) => 
+        extractDependenciesAndSimilarity(group, 0, [index])
+      );
+    });
+    
+    console.log("Advanced Layout Algorithm: Built dependency relationships and", similarityGroups.size, "similarity groups");
+    
+    // Phase 2: Calculate needness levels (vertical positioning priority)
+    const needinessLevels = new Map();
+    const visited = new Set();
+    const visiting = new Set();
+    
+    const calculateNeedness = (courseId, depth = 0) => {
+      if (depth > 100 || visiting.has(courseId)) return 0;
+      if (visited.has(courseId)) return needinessLevels.get(courseId) || 0;
+      
+      visiting.add(courseId);
+      const dependencies = dependencyMap.get(courseId) || new Set();
+      let maxLevel = 0;
+      
+      dependencies.forEach(depId => {
+        if (courses.find(c => c.id === depId)) {
+          const depLevel = calculateNeedness(depId, depth + 1);
+          maxLevel = Math.max(maxLevel, depLevel + 1);
         }
-      })
-    }
+      });
+      
+      visiting.delete(courseId);
+      visited.add(courseId);
+      needinessLevels.set(courseId, maxLevel);
+      return maxLevel;
+    };
 
-    // Use the best configuration found
-    bestPositions.forEach((pos, courseId) => {
-      if (clusteredCourses.some(c => c.id === courseId)) {
-        positions.set(courseId, pos)
-      }
-    })
-  })
-
-  return positions
-}
-
-// Enhanced arrow path calculation for flexible routing
-export const calculateFlexibleArrowPath = (sourcePos, targetPos, allPositions, existingArrows = []) => {
-  const deltaX = targetPos.x - sourcePos.x
-  const deltaY = targetPos.y - sourcePos.y
-  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
-  
-  // Calculate curvature based on distance and potential conflicts
-  let curvature = Math.min(distance * 0.25, 100)
-  
-  // Increase curvature if there are many existing arrows
-  if (existingArrows.length > 10) {
-    curvature *= 1.5
-  }
-  
-  // Calculate control points for bezier curve
-  const midX = sourcePos.x + deltaX * 0.5
-  const midY = sourcePos.y + deltaY * 0.5
-  
-  // Add horizontal offset to avoid overlaps
-  const horizontalOffset = deltaX > 0 ? curvature : -curvature
-  const verticalOffset = Math.abs(deltaY) > 150 ? curvature * 0.6 : curvature * 0.8
-  
-  // Create waypoints for flexible path
-  const waypoints = [
-    { x: sourcePos.x, y: sourcePos.y + 25 },
-    { x: sourcePos.x + deltaX * 0.2, y: sourcePos.y + verticalOffset },
-    { x: midX + horizontalOffset, y: midY },
-    { x: targetPos.x - deltaX * 0.2, y: targetPos.y - verticalOffset },
-    { x: targetPos.x, y: targetPos.y - 25 }
-  ]
-  
-  return waypoints
-}
-
-// Find all prerequisite paths to a target course and courses that depend on it
-export const findPrerequisitePaths = (targetCourseId, courses) => {
-  const paths = new Set()
-  const courseIds = new Set(courses.map(c => c.id))
-  
-  // Find all paths leading TO the target course (prerequisites)
-  const findPathsTo = (courseId, currentPath = []) => {
-    if (currentPath.includes(courseId)) {
-      // Circular dependency, stop here
-      return
-    }
-    
-    const course = courses.find(c => c.id === courseId)
-    if (!course || !course.Prerequisite || !course.Prerequisite.prerequisites) {
-      return
-    }
-    
-    const processGroup = (group) => {
-      if (group.type === 'course') {
-        if (courseIds.has(group.value)) {
-          paths.add(`${group.value}-${courseId}`)
-          findPathsTo(group.value, [...currentPath, courseId])
-        }
-      } else if (group.type === 'AND' || group.type === 'OR') {
-        group.items.forEach(item => processGroup(item))
-      }
-    }
-    
-    course.Prerequisite.prerequisites.forEach(group => processGroup(group))
-  }
-  
-  // Find all paths leading FROM the target course (dependents)
-  const findPathsFrom = (courseId) => {
     courses.forEach(course => {
-      if (!courseIds.has(course.id) || !course.Prerequisite || !course.Prerequisite.prerequisites) return
+      if (course && course.id && !visited.has(course.id)) {
+        calculateNeedness(course.id);
+      }
+    });
+
+    console.log("Advanced Layout Algorithm: Calculated needness levels for", needinessLevels.size, "courses");
+
+    // Identify important courses based on out-degree (number of courses they are prerequisite for)
+    const outDegrees = new Map();
+    courses.forEach(course => {
+      outDegrees.set(course.id, 0);
+    });
+
+    reverseDependencyMap.forEach((dependents, prereqId) => {
+      outDegrees.set(prereqId, dependents.size);
+    });
+
+    // Sort courses by out-degree to identify the most important ones
+    const sortedByOutDegree = Array.from(outDegrees.entries()).sort((a, b) => b[1] - a[1]);
+    // Consider the top 10% (or at least 1) courses as important for centering
+    const numImportantCourses = Math.max(1, Math.floor(courses.length * 0.1));
+    const importantCourseIds = new Set(sortedByOutDegree.slice(0, numImportantCourses).map(entry => entry[0]));
+    console.log("Advanced Layout Algorithm: Identified important courses:", Array.from(importantCourseIds));
+
+    // Phase 3: Create similarity clusters (horizontal positioning priority)
+    const similarityClusters = new Map();
+    const processedCourses = new Set();
+    
+    // Group courses by similarity first
+    similarityGroups.forEach((courseSet, groupKey) => {
+      const availableCourses = Array.from(courseSet).filter(courseId => 
+        courses.find(c => c.id === courseId) && !processedCourses.has(courseId)
+      );
       
-      const processGroup = (group) => {
-        if (group.type === 'course') {
-          if (group.value === courseId) {
-            paths.add(`${courseId}-${course.id}`)
+      if (availableCourses.length > 1) {
+        const clusterId = `similarity-${similarityClusters.size}`;
+        similarityClusters.set(clusterId, availableCourses);
+        availableCourses.forEach(courseId => processedCourses.add(courseId));
+      }
+    });
+    
+    // Add remaining courses as individual clusters
+    courses.forEach(course => {
+      if (course && course.id && !processedCourses.has(course.id)) {
+        const clusterId = `individual-${course.id}`;
+        similarityClusters.set(clusterId, [course.id]);
+        processedCourses.add(course.id);
+      }
+    });
+    
+    console.log("Advanced Layout Algorithm: Created", similarityClusters.size, "similarity clusters");
+
+    // Phase 4: Group by needness levels and arrange clusters
+    const levelGroups = new Map();
+    courses.forEach(course => {
+      if (!course || !course.id) return;
+      const level = needinessLevels.get(course.id) || 0;
+      if (!levelGroups.has(level)) {
+        levelGroups.set(level, []);
+      }
+      levelGroups.get(level).push(course);
+    });
+
+    // Phase 5: Advanced positioning with arrow-aware optimization
+    const positions = new Map();
+    const nodeWidth = 280;
+    const nodeHeight = 100;
+    const levelHeight = 300;
+    const clusterSpacing = 60;
+    const nodeSpacing = 40;
+    
+    // Calculate arrow intersection potential
+    const calculateArrowIntersectionScore = (positions, edges) => {
+      let intersectionCount = 0;
+      const edgeList = Array.from(edges);
+      
+      for (let i = 0; i < edgeList.length; i++) {
+        for (let j = i + 1; j < edgeList.length; j++) {
+          const edge1 = edgeList[i];
+          const edge2 = edgeList[j];
+          
+          const pos1Source = positions.get(edge1.source);
+          const pos1Target = positions.get(edge1.target);
+          const pos2Source = positions.get(edge2.source);
+          const pos2Target = positions.get(edge2.target);
+          
+          if (pos1Source && pos1Target && pos2Source && pos2Target) {
+            // Simplified intersection check using bounding rectangles
+            const rect1 = {
+              left: Math.min(pos1Source.x, pos1Target.x) - 50,
+              right: Math.max(pos1Source.x, pos1Target.x) + 50,
+              top: Math.min(pos1Source.y, pos1Target.y) - 50,
+              bottom: Math.max(pos1Source.y, pos1Target.y) + 50
+            };
+            
+            const rect2 = {
+              left: Math.min(pos2Source.x, pos2Target.x) - 50,
+              right: Math.max(pos2Source.x, pos2Target.x) + 50,
+              top: Math.min(pos2Source.y, pos2Target.y) - 50,
+              bottom: Math.max(pos2Source.y, pos2Target.y) + 50};
+            
+              if (rect1.left < rect2.right && rect1.right > rect2.left &&
+                  rect1.top < rect2.bottom && rect1.bottom > rect2.top) {
+                intersectionCount++;
+              }
+            }
           }
-        } else if (group.type === 'AND' || group.type === 'OR') {
-          group.items.forEach(item => processGroup(item))
+        }
+        
+        return intersectionCount;
+      };
+      
+      // Build edge list for intersection calculation
+      const buildEdgeList = () => {
+        const edges = [];
+        courses.forEach(course => {
+          if (!course || !course.id || !course.Prerequisite || !course.Prerequisite.prerequisites) return;
+          
+          const extractEdges = (group) => {
+            if (group.type === "course" && group.value) {
+              edges.push({ source: group.value, target: course.id });
+            } else if ((group.type === "AND" || group.type === "OR") && Array.isArray(group.items)) {
+              group.items.forEach(item => extractEdges(item));
+            }
+          };
+          
+          course.Prerequisite.prerequisites.forEach(group => extractEdges(group));
+        });
+        
+        return edges;
+      };
+      
+      const allEdges = buildEdgeList();
+      
+      // Position courses level by level with arrow-aware optimization
+      Array.from(levelGroups.keys()).sort((a, b) => a - b).forEach(level => {
+        const coursesInLevel = levelGroups.get(level) || [];
+        if (coursesInLevel.length === 0) return;
+  
+        // Group courses in this level by similarity clusters
+        const levelClusters = new Map();
+        coursesInLevel.forEach(course => {
+          let foundCluster = false;
+          similarityClusters.forEach((clusterCourses, clusterId) => {
+            if (clusterCourses.includes(course.id)) {
+              if (!levelClusters.has(clusterId)) {
+                levelClusters.set(clusterId, []);
+              }
+              levelClusters.get(clusterId).push(course);
+              foundCluster = true;
+            }
+          });
+          
+          if (!foundCluster) {
+            const individualClusterId = `level-${level}-individual-${course.id}`;
+            levelClusters.set(individualClusterId, [course]);
+          }
+        });
+  
+        // Calculate total width needed for this level
+        let totalWidth = 0;
+        levelClusters.forEach(clusterCourses => {
+          totalWidth += clusterCourses.length * nodeWidth + (clusterCourses.length - 1) * nodeSpacing;
+        });
+        totalWidth += (levelClusters.size - 1) * clusterSpacing;
+  
+        // Position clusters from left to right
+        let currentX = -totalWidth / 2;
+        
+        Array.from(levelClusters.entries()).forEach(([clusterId, clusterCourses], clusterIndex) => {
+          // Sort courses within cluster for consistent positioning
+          clusterCourses.sort((a, b) => a.id.localeCompare(b.id));
+          
+          // Check if this cluster contains an important course
+          const containsImportantCourse = clusterCourses.some(course => importantCourseIds.has(course.id));
+  
+          // If it contains an important course, try to center this cluster more
+          let clusterOffsetX = 0;
+          if (containsImportantCourse) {
+            // Calculate the center of the current level's available space
+            const levelCenter = 0; // Assuming the overall layout is centered around X=0
+            const clusterCenter = currentX + (clusterCourses.length * nodeWidth + (clusterCourses.length - 1) * nodeSpacing) / 2;
+            clusterOffsetX = levelCenter - clusterCenter; // Shift to center
+            // Limit the shift to avoid breaking other layout principles too much
+            clusterOffsetX = Math.max(-totalWidth / 4, Math.min(totalWidth / 4, clusterOffsetX));
+          }
+  
+          // Position courses within this cluster
+          clusterCourses.forEach((course, courseIndex) => {
+            // Add organic variation to avoid grid-like appearance
+            const organicOffsetX = Math.sin(clusterIndex * 0.7 + courseIndex * 0.5) * 40;
+            const organicOffsetY = Math.cos(clusterIndex * 0.3 + courseIndex * 0.8) * 60;
+            
+            const baseX = currentX + courseIndex * (nodeWidth + nodeSpacing) + nodeWidth / 2;
+            const baseY = level * levelHeight;
+            
+            positions.set(course.id, {
+              x: baseX + organicOffsetX + clusterOffsetX,
+              y: baseY + organicOffsetY
+            });
+          });
+          
+          // Move to next cluster position
+          currentX += clusterCourses.length * nodeWidth + (clusterCourses.length - 1) * nodeSpacing + clusterSpacing;
+        });
+      });
+  
+      // Phase 6: Arrow-aware fine-tuning optimization
+      console.log("Advanced Layout Algorithm: Starting arrow-aware optimization");
+      
+      const optimizationIterations = 200;
+      let bestPositions = new Map(positions);
+      let bestIntersectionScore = calculateArrowIntersectionScore(positions, allEdges);
+      
+      for (let iteration = 0; iteration < optimizationIterations; iteration++) {
+        const testPositions = new Map(positions);
+        
+        // Apply small random adjustments to reduce arrow intersections
+        courses.forEach(course => {
+          if (!course || !course.id) return;
+          
+          const currentPos = testPositions.get(course.id);
+          if (!currentPos) return;
+          
+          // Small random adjustments
+          const deltaX = (Math.random() - 0.5) * 60;
+          const deltaY = (Math.random() - 0.5) * 40;
+          
+          testPositions.set(course.id, {
+            x: currentPos.x + deltaX,
+            y: currentPos.y + deltaY
+          });
+        });
+        
+        // Check if this configuration reduces arrow intersections
+        const testScore = calculateArrowIntersectionScore(testPositions, allEdges);
+        
+        if (testScore < bestIntersectionScore) {
+          bestPositions = new Map(testPositions);
+          bestIntersectionScore = testScore;
+          console.log(`Advanced Layout Algorithm: Improved intersection score to ${testScore} at iteration ${iteration}`);
+        }
+        
+        // Apply the best configuration found so far
+        if (iteration % 50 === 0) {
+          positions.clear();
+          bestPositions.forEach((pos, courseId) => positions.set(courseId, pos));
         }
       }
       
-      course.Prerequisite.prerequisites.forEach(group => processGroup(group))
-    })
-  }
+      // Apply final best positions
+      positions.clear();
+      bestPositions.forEach((pos, courseId) => positions.set(courseId, pos));
   
-  // Find paths both to and from the target course
-  findPathsTo(targetCourseId)
-  findPathsFrom(targetCourseId)
-  
-  return Array.from(paths)
-}
+      // Phase 7: Final collision avoidance for nodes
+      console.log("Advanced Layout Algorithm: Final collision avoidance");
+      
+      const collisionAvoidanceIterations = 100;
+      const minNodeDistance = nodeWidth + 50;
+      
+      for (let iteration = 0; iteration < collisionAvoidanceIterations; iteration++) {
+        let hasCollision = false;
+        
+        courses.forEach(course1 => {
+          if (!course1 || !course1.id) return;
+          
+          courses.forEach(course2 => {
+            if (!course2 || !course2.id || course1.id === course2.id) return;
+            
+            const pos1 = positions.get(course1.id);
+            const pos2 = positions.get(course2.id);
+            
+            if (!pos1 || !pos2) return;
+            
+            const distance = Math.sqrt(
+              Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2)
+            );
+            
+            if (distance < minNodeDistance) {
+              hasCollision = true;
+              
+              // Push nodes apart
+              const angle = Math.atan2(pos1.y - pos2.y, pos1.x - pos2.x);
+              const pushDistance = (minNodeDistance - distance) / 2;
+              
+              positions.set(course1.id, {
+                x: pos1.x + Math.cos(angle) * pushDistance,
+                y: pos1.y + Math.sin(angle) * pushDistance
+              });
+              
+              positions.set(course2.id, {
+                x: pos2.x - Math.cos(angle) * pushDistance,
+                y: pos2.y - Math.sin(angle) * pushDistance
+              });
+            }
+          });
+        });
+        
+        if (!hasCollision) break;}
+
+        console.log("Advanced Layout Algorithm: Completed successfully with", positions.size, "positioned courses");
+        console.log("Advanced Layout Algorithm: Final arrow intersection score:", calculateArrowIntersectionScore(positions, allEdges));
+        
+        return positions;
+    
+      } catch (error) {
+        console.error("Advanced Layout Algorithm: Critical error:", error);
+        
+        // Return fallback positions
+        const fallbackPositions = new Map();
+        if (Array.isArray(courses)) {
+          courses.forEach((course, index) => {
+            if (course && course.id) {
+              fallbackPositions.set(course.id, {
+                x: (index % 6) * 300,
+                y: Math.floor(index / 6) * 250
+              });
+            }
+          });
+        }
+        
+        return fallbackPositions;
+      }
+    };
+    
+    // Enhanced flexible arrow path calculation with intersection avoidance
+    export const calculateFlexibleArrowPath = (sourcePos, targetPos, allPositions, existingArrows = []) => {
+      try {
+        if (!sourcePos || !targetPos || typeof sourcePos.x !== "number" || typeof sourcePos.y !== "number" ||
+            typeof targetPos.x !== "number" || typeof targetPos.y !== "number") {
+          return [];
+        }
+    
+        const deltaX = targetPos.x - sourcePos.x;
+        const deltaY = targetPos.y - sourcePos.y;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        
+        if (!isFinite(distance) || distance === 0) return [];
+    
+        // Calculate flexible control points for Bezier curves
+        const controlPointDistance = Math.min(distance * 0.4, 200);
+        
+        // Add variation based on arrow density in the area
+        const nearbyArrows = existingArrows.filter(arrow => {
+          const arrowMidX = (arrow.sourcePos.x + arrow.targetPos.x) / 2;
+          const arrowMidY = (arrow.sourcePos.y + arrow.targetPos.y) / 2;
+          const currentMidX = (sourcePos.x + targetPos.x) / 2;
+          const currentMidY = (sourcePos.y + targetPos.y) / 2;
+          
+          const midDistance = Math.sqrt(
+            Math.pow(arrowMidX - currentMidX, 2) + Math.pow(arrowMidY - currentMidY, 2)
+          );
+          
+          return midDistance < 300; // Consider arrows within 300px as nearby
+        });
+        
+        // Adjust curvature based on nearby arrow density
+        const densityFactor = Math.min(nearbyArrows.length * 0.3, 2);
+        const curvatureOffset = 50 + densityFactor * 30;
+        
+        // Calculate control points with intelligent routing
+        const midX = (sourcePos.x + targetPos.x) / 2;
+        const midY = (sourcePos.y + targetPos.y) / 2;
+        
+        // Perpendicular offset for curve
+        const perpX = -deltaY / distance;
+        const perpY = deltaX / distance;
+        
+        // Alternate curve direction based on arrow index to spread them out
+        const curveDirection = (Math.abs(sourcePos.x + targetPos.x + sourcePos.y + targetPos.y) % 2) * 2 - 1;
+        
+        const controlPoint1 = {
+          x: sourcePos.x + deltaX * 0.3 + perpX * curvatureOffset * curveDirection,
+          y: sourcePos.y + deltaY * 0.3 + perpY * curvatureOffset * curveDirection
+        };
+        
+        const controlPoint2 = {
+          x: targetPos.x - deltaX * 0.3 + perpX * curvatureOffset * curveDirection,
+          y: targetPos.y - deltaY * 0.3 + perpY * curvatureOffset * curveDirection
+        };
+        
+        // Check for node collisions and adjust if necessary
+        if (allPositions) {
+          Array.from(allPositions.values()).forEach(nodePos => {
+            [controlPoint1, controlPoint2].forEach(cp => {
+              const distToNode = Math.sqrt(
+                Math.pow(cp.x - nodePos.x, 2) + Math.pow(cp.y - nodePos.y, 2)
+              );
+              
+              if (distToNode < 150) { // Too close to a node
+                const avoidanceAngle = Math.atan2(cp.y - nodePos.y, cp.x - nodePos.x);
+                cp.x = nodePos.x + Math.cos(avoidanceAngle) * 150;
+                cp.y = nodePos.y + Math.sin(avoidanceAngle) * 150;
+              }
+            });
+          });
+        }
+        
+        return [
+          { x: sourcePos.x, y: sourcePos.y },
+          controlPoint1,
+          controlPoint2,
+          { x: targetPos.x, y: targetPos.y }
+        ];
+    
+      } catch (error) {
+        console.error("calculateFlexibleArrowPath: Error calculating path:", error);
+        return [];
+      }
+    };
+    
+    // Find prerequisite paths for highlighting
+    export const findPrerequisitePaths = (targetCourseId, courses) => {
+      try {
+        const paths = new Set();
+        const visited = new Set();
+        
+        const findPaths = (courseId, depth = 0) => {
+          if (depth > 20 || visited.has(courseId)) return;
+          visited.add(courseId);
+          
+          const course = courses.find(c => c.id === courseId);
+          if (!course || !course.Prerequisite || !course.Prerequisite.prerequisites) return;
+          
+          const extractPaths = (group) => {
+            if (group.type === "course" && group.value) {
+              paths.add(`${group.value}-${courseId}`);
+              findPaths(group.value, depth + 1);
+            } else if ((group.type === "AND" || group.type === "OR") && Array.isArray(group.items)) {
+              group.items.forEach(item => extractPaths(item));
+            }
+          };
+          
+          course.Prerequisite.prerequisites.forEach(group => extractPaths(group));
+        };
+        
+        findPaths(targetCourseId);
+        return Array.from(paths);
+        
+      } catch (error) {
+        console.error("findPrerequisitePaths: Error finding paths:", error);
+        return [];
+      }
+    };
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
 
 
 

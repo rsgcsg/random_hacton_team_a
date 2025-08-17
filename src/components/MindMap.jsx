@@ -39,62 +39,33 @@ const MindMap = ({
 
   // Filter courses based on selections
   const filteredCourses = useMemo(() => {
-    if (selectedCourses.length > 0) {
-      return data.courses.filter((course) =>
-        selectedCourses.includes(course.id)
-      );
+    let coursesToDisplay = new Set();
+
+    // Add courses from selected degrees
+    selectedDegrees.forEach((degreeId) => {
+      const degree = data.degrees.find((d) => d.id === degreeId);
+      if (degree && degree.course_array) {
+        degree.course_array.forEach((courseId) => coursesToDisplay.add(courseId));
+      }
+    });
+
+    // Add courses from selected majors
+    selectedMajors.forEach((majorId) => {
+      const major = data.majors.find((m) => m.id === majorId);
+      if (major && major.course_array) {
+        major.course_array.forEach((courseId) => coursesToDisplay.add(courseId));
+      }
+    });
+
+    // Add explicitly selected courses
+    selectedCourses.forEach((courseId) => coursesToDisplay.add(courseId));
+
+    // If no degrees, majors, or specific courses are selected, show all courses
+    if (coursesToDisplay.size === 0) {
+      return data.courses;
     }
 
-    if (selectedMajors.length > 0) {
-      // Get all courses from selected majors
-      const majorCourses = new Set();
-      selectedMajors.forEach((majorId) => {
-        const major = data.majors.find((m) => m.id === majorId);
-        if (major && major.course_array) {
-          major.course_array.forEach((courseId) => majorCourses.add(courseId));
-        }
-      });
-
-      // Also include all courses from parent degrees
-      const parentDegrees = new Set();
-      selectedMajors.forEach((majorId) => {
-        data.degrees.forEach((degree) => {
-          if (degree.major_array && degree.major_array.includes(majorId)) {
-            parentDegrees.add(degree.id);
-          }
-        });
-      });
-
-      // Include all courses from parent degrees
-      return data.courses.filter((course) => {
-        return (
-          parentDegrees.size === 0 ||
-          Array.from(parentDegrees).some((degreeId) => {
-            const degree = data.degrees.find((d) => d.id === degreeId);
-            return (
-              degree &&
-              degree.course_array &&
-              degree.course_array.includes(course.id)
-            );
-          })
-        );
-      });
-    }
-
-    if (selectedDegrees.length > 0) {
-      return data.courses.filter((course) =>
-        selectedDegrees.some((degreeId) => {
-          const degree = data.degrees.find((d) => d.id === degreeId);
-          return (
-            degree &&
-            degree.course_array &&
-            degree.course_array.includes(course.id)
-          );
-        })
-      );
-    }
-
-    return data.courses;
+    return data.courses.filter((course) => coursesToDisplay.has(course.id));
   }, [
     data.courses,
     data.majors,
@@ -108,8 +79,7 @@ const MindMap = ({
   const getCourseColor = useCallback((course) => {
     // Priority: course > major > degree
     if (selectedCourses.includes(course.id)) {
-      const color = course.color || 'gray';
-      return [color];
+      return [course.color || 'gray'];
     }
     
     const selectedMajorColors = selectedMajors
@@ -133,8 +103,7 @@ const MindMap = ({
     if (selectedDegreeColors.length > 0) {
       return selectedDegreeColors 
     }
-    const color = course.color || 'gray';
-    return [color];
+    return [course.color || 'gray'];
   }, [selectedCourses, selectedMajors, selectedDegrees, data.majors, data.degrees]);
 
   // Create nodes from filtered courses
@@ -326,6 +295,8 @@ const MindMap = ({
 }
 
 export default MindMap
+
+
 
 
 
