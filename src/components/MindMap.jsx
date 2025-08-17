@@ -39,8 +39,8 @@ const MindMap = ({
       const node = nodes.find((n) => n.id === selectedCourse.id);
       if (node) {
         // Zoom and center on the node
-        setCenter(node.position.x, node.position.y, {
-          zoom: 1.5, // adjust zoom level as needed
+        setCenter(node.position.x + 100, node.position.y, {
+          zoom: 0.6, // adjust zoom level as needed
           duration: 800, // smooth animation (ms)
         });
       }
