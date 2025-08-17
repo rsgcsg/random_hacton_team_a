@@ -1,15 +1,10 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button.jsx";
-import { Checkbox } from "@/components/ui/checkbox.jsx";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.jsx";
-import { Switch } from "@/components/ui/switch.jsx";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import SearchBar from "./SearchBar";
+import { useState } from 'react'
+import { Button } from '@/components/ui/button.jsx'
+import { Checkbox } from '@/components/ui/checkbox.jsx'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Switch } from '@/components/ui/switch.jsx'
+import { ChevronDown, ChevronRight, X } from 'lucide-react'
+import SearchBar from './SearchBar'
 
 const Sidebar = ({
   data,
@@ -21,57 +16,73 @@ const Sidebar = ({
   setSelectedCourses,
   showArrows,
   setShowArrows,
-  onCourseSelect,
-  setData,
+  onCourseSelect
 }) => {
   const [expandedSections, setExpandedSections] = useState({
     degrees: true,
     majors: true,
-    courses: true,
-  });
+    courses: true
+  })
+  
+  const [isOpen, setIsOpen] = useState(true) // Sidebar open/close
 
   const toggleSection = (section) => {
-    setExpandedSections((prev) => ({
+    setExpandedSections(prev => ({
       ...prev,
-      [section]: !prev[section],
-    }));
-  };
+      [section]: !prev[section]
+    }))
+  }
 
   const handleDegreeChange = (degreeId, checked) => {
     if (checked) {
-      setSelectedDegrees([...selectedDegrees, degreeId]);
+      setSelectedDegrees([...selectedDegrees, degreeId])
     } else {
-      setSelectedDegrees(selectedDegrees.filter((id) => id !== degreeId));
+      setSelectedDegrees(selectedDegrees.filter(id => id !== degreeId))
     }
-  };
+  }
 
   const handleMajorChange = (majorId, checked) => {
     if (checked) {
-      setSelectedMajors([...selectedMajors, majorId]);
+      setSelectedMajors([...selectedMajors, majorId])
     } else {
-      setSelectedMajors(selectedMajors.filter((id) => id !== majorId));
+      setSelectedMajors(selectedMajors.filter(id => id !== majorId))
     }
-  };
+  }
 
   const handleCourseChange = (courseId, checked) => {
     if (checked) {
-      setSelectedCourses([...selectedCourses, courseId]);
+      setSelectedCourses([...selectedCourses, courseId])
     } else {
-      setSelectedCourses(selectedCourses.filter((id) => id !== courseId));
+      setSelectedCourses(selectedCourses.filter(id => id !== courseId))
     }
-  };
+  }
+
+  if (!isOpen) {
+    return (
+      <button
+        className="absolute top-4 left-4 p-2 bg-primary text-white rounded shadow z-50"
+        onClick={() => setIsOpen(true)}
+      >
+        Open Sidebar
+      </button>
+    )
+  }
 
   return (
-    <div className="w-80 bg-card border-r border-border p-4 overflow-y-auto">
+    <div className="w-80 bg-card border-r border-border p-4 overflow-y-auto relative">
+      {/* Close Button */}
+      <button
+        onClick={() => setIsOpen(false)}
+        className="absolute top-2 right-2 p-1 rounded hover:bg-gray-200 z-50"
+      >
+        <X size={16} color="black" />
+      </button>
+
       <h1 className="text-2xl font-bold mb-6">Course Mind Map</h1>
-
+      
       {/* Search Bar */}
-      <SearchBar
-        data={data}
-        onCourseSelect={onCourseSelect}
-        setData={setData}
-      />
-
+      <SearchBar data={data} onCourseSelect={onCourseSelect} />
+      
       {/* Show Arrows Toggle */}
       <Card className="mb-4">
         <CardContent className="p-4">
@@ -91,28 +102,19 @@ const Sidebar = ({
       {/* Degrees Section */}
       <Card className="mb-4">
         <CardHeader className="pb-2">
-          <CardTitle
-            className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection("degrees")}
-          >
+          <CardTitle className="flex items-center justify-between cursor-pointer" onClick={() => toggleSection('degrees')}>
             <span>Degrees</span>
-            {expandedSections.degrees ? (
-              <ChevronDown size={16} />
-            ) : (
-              <ChevronRight size={16} />
-            )}
+            {expandedSections.degrees ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
           </CardTitle>
         </CardHeader>
         {expandedSections.degrees && (
           <CardContent className="pt-0">
-            {data.degrees.map((degree) => (
+            {data.degrees.map(degree => (
               <div key={degree.id} className="flex items-center space-x-2 mb-2">
                 <Checkbox
                   id={`degree-${degree.id}`}
                   checked={selectedDegrees.includes(degree.id)}
-                  onCheckedChange={(checked) =>
-                    handleDegreeChange(degree.id, checked)
-                  }
+                  onCheckedChange={(checked) => handleDegreeChange(degree.id, checked)}
                 />
                 <label
                   htmlFor={`degree-${degree.id}`}
@@ -133,28 +135,19 @@ const Sidebar = ({
       {/* Majors Section */}
       <Card className="mb-4">
         <CardHeader className="pb-2">
-          <CardTitle
-            className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection("majors")}
-          >
+          <CardTitle className="flex items-center justify-between cursor-pointer" onClick={() => toggleSection('majors')}>
             <span>Majors</span>
-            {expandedSections.majors ? (
-              <ChevronDown size={16} />
-            ) : (
-              <ChevronRight size={16} />
-            )}
+            {expandedSections.majors ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
           </CardTitle>
         </CardHeader>
         {expandedSections.majors && (
           <CardContent className="pt-0">
-            {data.majors.map((major) => (
+            {data.majors.map(major => (
               <div key={major.id} className="flex items-center space-x-2 mb-2">
                 <Checkbox
                   id={`major-${major.id}`}
                   checked={selectedMajors.includes(major.id)}
-                  onCheckedChange={(checked) =>
-                    handleMajorChange(major.id, checked)
-                  }
+                  onCheckedChange={(checked) => handleMajorChange(major.id, checked)}
                 />
                 <label
                   htmlFor={`major-${major.id}`}
@@ -175,28 +168,19 @@ const Sidebar = ({
       {/* Courses Section */}
       <Card className="mb-4">
         <CardHeader className="pb-2">
-          <CardTitle
-            className="flex items-center justify-between cursor-pointer"
-            onClick={() => toggleSection("courses")}
-          >
+          <CardTitle className="flex items-center justify-between cursor-pointer" onClick={() => toggleSection('courses')}>
             <span>Courses</span>
-            {expandedSections.courses ? (
-              <ChevronDown size={16} />
-            ) : (
-              <ChevronRight size={16} />
-            )}
+            {expandedSections.courses ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
           </CardTitle>
         </CardHeader>
         {expandedSections.courses && (
           <CardContent className="pt-0">
-            {data.courses.map((course) => (
+            {data.courses.map(course => (
               <div key={course.id} className="flex items-center space-x-2 mb-2">
                 <Checkbox
                   id={`course-${course.id}`}
                   checked={selectedCourses.includes(course.id)}
-                  onCheckedChange={(checked) =>
-                    handleCourseChange(course.id, checked)
-                  }
+                  onCheckedChange={(checked) => handleCourseChange(course.id, checked)}
                 />
                 <label
                   htmlFor={`course-${course.id}`}
@@ -214,7 +198,7 @@ const Sidebar = ({
         )}
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

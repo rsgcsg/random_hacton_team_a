@@ -100,56 +100,37 @@ const MindMap = ({
   ]);
 
   // Get course color based on selections
-  const getCourseColor = useCallback(
-    (course) => {
-      // Priority: course > major > degree
-      if (selectedCourses.includes(course.id)) {
-        return course.color;
-      }
+  const getCourseColor = useCallback((course) => {
+    // Priority: course > major > degree
+    if (selectedCourses.includes(course.id)) {
+      const color = course.color || 'gray';
+      return [color];
+    }
+    
+    const selectedMajorColors = selectedMajors
+    .map(majorId => data.majors.find(m => m.id === majorId))
+    .filter(major => major && major.course_array && major.course_array.includes(course.id))
+    .map(major => major.color)
+    .filter(Boolean);
+  
+  if (selectedMajorColors.length > 0) {
+    return selectedMajorColors; // return all colors, not just the first
+  }
 
-      // Check if course belongs to any selected major
-      const selectedMajorColors = selectedMajors
-        .map((majorId) => data.majors.find((m) => m.id === majorId))
-        .filter(
-          (major) =>
-            major &&
-            major.course_array &&
-            major.course_array.includes(course.id)
-        )
-        .map((major) => major.color)
-        .filter(Boolean);
-
-      if (selectedMajorColors.length > 0) {
-        return selectedMajorColors[0]; // Use first major color for now
-      }
-
-      // Check if course belongs to any selected degree
-      const selectedDegreeColors = selectedDegrees
-        .map((degreeId) => data.degrees.find((d) => d.id === degreeId))
-        .filter(
-          (degree) =>
-            degree &&
-            degree.course_array &&
-            degree.course_array.includes(course.id)
-        )
-        .map((degree) => degree.color)
-        .filter(Boolean);
-
-      if (selectedDegreeColors.length > 0) {
-        return selectedDegreeColors[0]; // Use first degree color for now
-      }
-
-      // Try to change the colour based on the course level
-      return course.color;
-    },
-    [
-      selectedCourses,
-      selectedMajors,
-      selectedDegrees,
-      data.majors,
-      data.degrees,
-    ]
-  );
+    
+    // Check if course belongs to any selected degree
+    const selectedDegreeColors = selectedDegrees
+      .map(degreeId => data.degrees.find(d => d.id === degreeId))
+      .filter(degree => degree && degree.course_array && degree.course_array.includes(course.id))
+      .map(degree => degree.color)
+      .filter(Boolean);
+    
+    if (selectedDegreeColors.length > 0) {
+      return selectedDegreeColors 
+    }
+    const color = course.color || 'gray';
+    return [color];
+  }, [selectedCourses, selectedMajors, selectedDegrees, data.majors, data.degrees]);
 
   // Create nodes from filtered courses
   useEffect(() => {

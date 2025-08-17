@@ -100,10 +100,10 @@ export const calculateCourseLayout = (courses) => {
 
   // Position courses
   const positions = new Map()
-  const levelHeight = 350 // Increased height to allow more vertical spread
-  const courseWidth = 280
+  const levelHeight = 300 // Increased height to allow more vertical spread
+  const courseWidth = 300
   const courseHeight = 100 // Approximate height of a course node
-  const horizontalSpacing = 50 // Increased horizontal spacing
+  const horizontalSpacing = 30 // Increased horizontal spacing
 
   Array.from(levelGroups.keys()).sort((a, b) => a - b).forEach(level => {
     let coursesInLevel = levelGroups.get(level)
@@ -153,10 +153,10 @@ export const calculateCourseLayout = (courses) => {
 
     // Apply a simple force-directed adjustment to minimize edge crossings
     // This is a very basic heuristic and not a full force-directed algorithm
-    const forceFactor = 0.05 // Reduced force factor for more stability
-    const dampingFactor = 0.9 // Damping to prevent overshooting
-    const maxIterations = 1000 // Further increased iterations for better convergence
-    const maxForce = 900 // Further increased cap for the maximum force applied in one step
+    const forceFactor = 0.1 // Reduced force factor for more stability
+    const dampingFactor = 0.8 // Damping to prevent overshooting
+    const maxIterations = 1500 // Further increased iterations for better convergence
+    const maxForce = 800 // Further increased cap for the maximum force applied in one step
 
     for (let i = 0; i < maxIterations; i++) {
       clusteredCourses.forEach(course => {
@@ -196,8 +196,8 @@ export const calculateCourseLayout = (courses) => {
           if (course.id !== otherCourse.id) {
             const distanceX = adjustedPositions.get(course.id) - adjustedPositions.get(otherCourse.id)
             const distanceY = (level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 50) - (level * levelHeight + (clusteredCourses.indexOf(otherCourse) % 2 === 0 ? 1 : -1) * 75)
-            const minDistanceX = courseWidth + 200 // Further increased minimum horizontal distance to avoid overlap
-            const minDistanceY = courseHeight + 150 // Further increased minimum vertical distance to avoid overlap
+            const minDistanceX = courseWidth + 100 // Further increased minimum horizontal distance to avoid overlap
+            const minDistanceY = courseHeight + 100 // Further increased minimum vertical distance to avoid overlap
 
             if (Math.abs(distanceX) < minDistanceX && Math.abs(distanceY) < minDistanceY) {
               // Overlap detected, apply strong repulsion in both dimensions
@@ -205,8 +205,8 @@ export const calculateCourseLayout = (courses) => {
               const overlapY = minDistanceY - Math.abs(distanceY)
 
               if (overlapX > 0 && overlapY > 0) { // Only if there's actual overlap in both dimensions
-                const repulsionForceX = overlapX * 30 // Even Stronger linear repulsion
-                const repulsionForceY = overlapY * 30
+                const repulsionForceX = overlapX * 100 // Even Stronger linear repulsion
+                const repulsionForceY = overlapY * 100
 
                 if (distanceX > 0) {
                   totalForce += repulsionForceX
@@ -244,7 +244,7 @@ export const calculateCourseLayout = (courses) => {
 
     clusteredCourses.forEach((course, index) => {
       // Introduce vertical offset to break strict rows
-      const verticalOffset = (index % 2 === 0 ? 1 : -1) * 100 // Increased vertical offset
+      const verticalOffset = (index % 2 === 0 ? 1 : -1) * 150 // Increased vertical offset
       positions.set(course.id, {
         x: adjustedPositions.get(course.id),
         y: level * levelHeight + verticalOffset
