@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button.jsx";
 import Sidebar from "./components/Sidebar";
 import MindMap from "./components/MindMap";
 import CourseDetailsPanel from "./components/CourseDetailsPanel";
