@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
+  useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CourseNode from "./CourseNode";
@@ -31,6 +32,20 @@ const MindMap = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const { setCenter } = useReactFlow();
+
+  useEffect(() => {
+    if (selectedCourse) {
+      const node = nodes.find((n) => n.id === selectedCourse.id);
+      if (node) {
+        // Zoom and center on the node
+        setCenter(node.position.x, node.position.y, {
+          zoom: 1.5, // adjust zoom level as needed
+          duration: 800, // smooth animation (ms)
+        });
+      }
+    }
+  }, [selectedCourse, nodes, setCenter]);
 
   // Filter courses based on selections
   const filteredCourses = useMemo(() => {
@@ -313,7 +328,7 @@ const MindMap = ({
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
-        fitView
+        defaultViewport={{ x: 0, y: 0, zoom: 0.3 }}
         minZoom={0.1}
         className="bg-background"
       >
