@@ -1,4 +1,4 @@
-// Layout algorithm to position courses based on prerequisites
+// Enhanced layout algorithm to position courses based on prerequisites with arrow-aware optimization
 export const calculateCourseLayout = (courses) => {
   // Create a map of course dependencies
   const dependencyMap = new Map()
@@ -98,12 +98,89 @@ export const calculateCourseLayout = (courses) => {
     }
   })
 
-  // Position courses
+  // Arrow intersection detection utilities
+  const calculateArrowPath = (sourcePos, targetPos) => {
+    // Calculate bezier control points for curved arrows
+    const deltaX = targetPos.x - sourcePos.x
+    const deltaY = targetPos.y - sourcePos.y
+    
+    // Control points for bezier curve
+    const controlPoint1 = {
+      x: sourcePos.x + deltaX * 0.25,
+      y: sourcePos.y + Math.abs(deltaX) * 0.3
+    }
+    
+    const controlPoint2 = {
+      x: targetPos.x - deltaX * 0.25,
+      y: targetPos.y - Math.abs(deltaX) * 0.3
+    }
+    
+    return {
+      start: sourcePos,
+      end: targetPos,
+      control1: controlPoint1,
+      control2: controlPoint2,
+      boundingBox: {
+        minX: Math.min(sourcePos.x, targetPos.x, controlPoint1.x, controlPoint2.x),
+        maxX: Math.max(sourcePos.x, targetPos.x, controlPoint1.x, controlPoint2.x),
+        minY: Math.min(sourcePos.y, targetPos.y, controlPoint1.y, controlPoint2.y),
+        maxY: Math.max(sourcePos.y, targetPos.y, controlPoint1.y, controlPoint2.y)
+      }
+    }
+  }
+
+  const arrowsIntersect = (arrow1, arrow2) => {
+    // Simple bounding box intersection check
+    const box1 = arrow1.boundingBox
+    const box2 = arrow2.boundingBox
+    
+    return !(box1.maxX < box2.minX || box2.maxX < box1.minX || 
+             box1.maxY < box2.minY || box2.maxY < box1.minY)
+  }
+
+  const calculateArrowIntersections = (positions) => {
+    const arrows = []
+    let intersectionCount = 0
+    
+    // Generate all arrows based on current positions
+    courses.forEach(course => {
+      if (!course.Prerequisite || !course.Prerequisite.prerequisites) return
+      
+      const targetPos = positions.get(course.id)
+      if (!targetPos) return
+      
+      const extractArrows = (group) => {
+        if (group.type === 'course') {
+          const sourcePos = positions.get(group.value)
+          if (sourcePos) {
+            arrows.push(calculateArrowPath(sourcePos, targetPos))
+          }
+        } else if (group.type === 'AND' || group.type === 'OR') {
+          group.items.forEach(item => extractArrows(item))
+        }
+      }
+      
+      course.Prerequisite.prerequisites.forEach(group => extractArrows(group))
+    })
+    
+    // Count intersections
+    for (let i = 0; i < arrows.length; i++) {
+      for (let j = i + 1; j < arrows.length; j++) {
+        if (arrowsIntersect(arrows[i], arrows[j])) {
+          intersectionCount++
+        }
+      }
+    }
+    
+    return { arrows, intersectionCount }
+  }
+
+  // Position courses with enhanced algorithm
   const positions = new Map()
-  const levelHeight = 300 // Increased height to allow more vertical spread
+  const levelHeight = 280 // Optimized height for better arrow spacing
   const courseWidth = 300
-  const courseHeight = 100 // Approximate height of a course node
-  const horizontalSpacing = 30 // Increased horizontal spacing
+  const courseHeight = 100
+  const horizontalSpacing = 40 // Optimized spacing
 
   Array.from(levelGroups.keys()).sort((a, b) => a - b).forEach(level => {
     let coursesInLevel = levelGroups.get(level)
@@ -131,7 +208,6 @@ export const calculateCourseLayout = (courses) => {
 
     // Sort the clustered courses for consistent positioning
     clusteredCourses.sort((a, b) => {
-      // Prioritize OR grouped courses, then by ID
       const aInOr = Array.from(orGroups.values()).some(g => g.has(a.id))
       const bInOr = Array.from(orGroups.values()).some(g => g.has(b.id))
 
@@ -143,116 +219,183 @@ export const calculateCourseLayout = (courses) => {
     const totalWidth = clusteredCourses.length * courseWidth + (clusteredCourses.length - 1) * horizontalSpacing
     let currentX = -totalWidth / 2
 
-    // Introduce a simple force-directed adjustment for horizontal positioning
-    // This is a simplified approach, a full force-directed algorithm would be more complex
+    // Initial positioning with organic distribution
     const adjustedPositions = new Map()
-    clusteredCourses.forEach(course => {
-      adjustedPositions.set(course.id, currentX + (courseWidth / 2) + (Math.random() - 0.5) * 100) // Add more randomness
+    clusteredCourses.forEach((course, index) => {
+      // Add slight wave pattern for organic look
+      const waveOffset = Math.sin(index * 0.7) * 60
+      adjustedPositions.set(course.id, currentX + (courseWidth / 2) + waveOffset)
       currentX += courseWidth + horizontalSpacing
     })
 
-    // Apply a simple force-directed adjustment to minimize edge crossings
-    // This is a very basic heuristic and not a full force-directed algorithm
-    const forceFactor = 0.1 // Reduced force factor for more stability
-    const dampingFactor = 0.8 // Damping to prevent overshooting
-    const maxIterations = 1500 // Further increased iterations for better convergence
-    const maxForce = 800 // Further increased cap for the maximum force applied in one step
+    // PHASE 1: Node-first optimization (prioritized)
+    const nodeOptimizationIterations = 800
+    const nodeForceFactor = 0.08
+    const nodeDampingFactor = 0.85
+    const maxNodeForce = 600
 
-    for (let i = 0; i < maxIterations; i++) {
+    for (let i = 0; i < nodeOptimizationIterations; i++) {
       clusteredCourses.forEach(course => {
         let totalForce = 0
         let connectedCount = 0
 
-        // Attract to prerequisites
-        courses.forEach(prereqCourse => {
-          if (prereqCourse.Prerequisite && prereqCourse.Prerequisite.prerequisites) {
-            const hasPrerequisite = prereqCourse.Prerequisite.prerequisites.some(group => 
-              group.items.some(item => item.type === 'course' && item.value === course.id)
-            )
-            if (hasPrerequisite) {
-              const prereqX = positions.get(prereqCourse.id)?.x || 0
-              totalForce += (prereqX - adjustedPositions.get(course.id)) * forceFactor
-              connectedCount++
-            }
+        // Attract to prerequisites and dependents
+        courses.forEach(otherCourse => {
+          const dependencies = dependencyMap.get(course.id) || new Set()
+          const reverseDependencies = reverseDependencyMap.get(course.id) || new Set()
+          
+          if (dependencies.has(otherCourse.id)) {
+            const otherX = adjustedPositions.get(otherCourse.id) || 0
+            totalForce += (otherX - adjustedPositions.get(course.id)) * nodeForceFactor
+            connectedCount++
+          }
+          
+          if (reverseDependencies.has(otherCourse.id)) {
+            const otherX = adjustedPositions.get(otherCourse.id) || 0
+            totalForce += (otherX - adjustedPositions.get(course.id)) * nodeForceFactor
+            connectedCount++
           }
         })
 
-        // Attract to dependents
-        courses.forEach(dependentCourse => {
-          if (course.Prerequisite && course.Prerequisite.prerequisites) {
-            const isPrerequisiteFor = course.Prerequisite.prerequisites.some(group => 
-              group.items.some(item => item.type === 'course' && item.value === dependentCourse.id)
-            )
-            if (isPrerequisiteFor) {
-              const dependentX = positions.get(dependentCourse.id)?.x || 0
-              totalForce += (dependentX - adjustedPositions.get(course.id)) * forceFactor
-              connectedCount++
-            }
-          }
-        })
-
-        // Repel from other courses in the same level to prevent overlap
+        // Strong repulsion to prevent node overlap
         clusteredCourses.forEach(otherCourse => {
           if (course.id !== otherCourse.id) {
-            const distanceX = adjustedPositions.get(course.id) - adjustedPositions.get(otherCourse.id)
-            const distanceY = (level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 50) - (level * levelHeight + (clusteredCourses.indexOf(otherCourse) % 2 === 0 ? 1 : -1) * 75)
-            const minDistanceX = courseWidth + 100 // Further increased minimum horizontal distance to avoid overlap
-            const minDistanceY = courseHeight + 100 // Further increased minimum vertical distance to avoid overlap
-
-            if (Math.abs(distanceX) < minDistanceX && Math.abs(distanceY) < minDistanceY) {
-              // Overlap detected, apply strong repulsion in both dimensions
-              const overlapX = minDistanceX - Math.abs(distanceX)
-              const overlapY = minDistanceY - Math.abs(distanceY)
-
-              if (overlapX > 0 && overlapY > 0) { // Only if there's actual overlap in both dimensions
-                const repulsionForceX = overlapX * 100 // Even Stronger linear repulsion
-                const repulsionForceY = overlapY * 100
-
-                if (distanceX > 0) {
-                  totalForce += repulsionForceX
-                } else {
-                  totalForce -= repulsionForceX
-                }
-
-                if (distanceY > 0) {
-                  // Apply vertical repulsion force by modifying the current position
-                  const currentPos = positions.get(course.id) || { x: adjustedPositions.get(course.id), y: level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 75 }
-                  positions.set(course.id, { ...currentPos, y: currentPos.y + repulsionForceY })
-                } else {
-                  // Apply vertical repulsion force by modifying the current position
-                  const currentPos = positions.get(course.id) || { x: adjustedPositions.get(course.id), y: level * levelHeight + (clusteredCourses.indexOf(course) % 2 === 0 ? 1 : -1) * 75 }
-                  positions.set(course.id, { ...currentPos, y: currentPos.y - repulsionForceY })
-                }
-              }
+            const distance = adjustedPositions.get(course.id) - adjustedPositions.get(otherCourse.id)
+            const minDistance = courseWidth + 80
+            
+            if (Math.abs(distance) < minDistance) {
+              const repulsionForce = (minDistance - Math.abs(distance)) * 120
+              totalForce += distance > 0 ? repulsionForce : -repulsionForce
+              connectedCount++
             }
           }
         })
 
-        let deltaX = 0
+        // Apply node forces
         if (connectedCount > 0) {
-          deltaX = (totalForce / connectedCount) * dampingFactor
-        } else {
-          deltaX = totalForce * dampingFactor
+          let deltaX = (totalForce / connectedCount) * nodeDampingFactor
+          deltaX = Math.max(-maxNodeForce, Math.min(maxNodeForce, deltaX))
+          adjustedPositions.set(course.id, adjustedPositions.get(course.id) + deltaX)
         }
-
-        // Cap the force to prevent extreme movements
-        deltaX = Math.max(-maxForce, Math.min(maxForce, deltaX))
-
-        adjustedPositions.set(course.id, adjustedPositions.get(course.id) + deltaX)
       })
     }
 
+    // Set initial positions for this level
     clusteredCourses.forEach((course, index) => {
-      // Introduce vertical offset to break strict rows
-      const verticalOffset = (index % 2 === 0 ? 1 : -1) * 150 // Increased vertical offset
+      const verticalOffset = Math.sin(index * 0.5) * 80 // Organic vertical distribution
       positions.set(course.id, {
         x: adjustedPositions.get(course.id),
         y: level * levelHeight + verticalOffset
       })
     })
+
+    // PHASE 2: Arrow-aware optimization (secondary priority)
+    const arrowOptimizationIterations = 300
+    const arrowForceFactor = 0.04
+    const arrowDampingFactor = 0.75
+
+    let bestIntersectionCount = Infinity
+    let bestPositions = new Map(positions)
+
+    for (let i = 0; i < arrowOptimizationIterations; i++) {
+      // Calculate current arrow intersections
+      const { intersectionCount } = calculateArrowIntersections(positions)
+      
+      // Track best configuration
+      if (intersectionCount < bestIntersectionCount) {
+        bestIntersectionCount = intersectionCount
+        bestPositions = new Map(positions)
+      }
+      
+      // Stop if we achieve minimal intersections
+      if (intersectionCount <= 2) break
+
+      // Apply arrow-aware forces
+      clusteredCourses.forEach(course => {
+        let arrowForce = 0
+        let arrowForceCount = 0
+
+        // Calculate force to reduce arrow intersections
+        const currentPos = positions.get(course.id)
+        if (!currentPos) return
+
+        // Test small position adjustments to see if they reduce intersections
+        const testPositions = new Map(positions)
+        const testOffsets = [-30, -15, 15, 30]
+        
+        let bestOffset = 0
+        let minIntersections = intersectionCount
+
+        testOffsets.forEach(offset => {
+          testPositions.set(course.id, { ...currentPos, x: currentPos.x + offset })
+          const { intersectionCount: testIntersections } = calculateArrowIntersections(testPositions)
+          
+          if (testIntersections < minIntersections) {
+            minIntersections = testIntersections
+            bestOffset = offset
+          }
+        })
+
+        // Apply the best offset as a force
+        if (bestOffset !== 0) {
+          arrowForce += bestOffset * arrowForceFactor
+          arrowForceCount++
+        }
+
+        // Apply arrow forces with damping
+        if (arrowForceCount > 0) {
+          let deltaX = (arrowForce / arrowForceCount) * arrowDampingFactor
+          deltaX = Math.max(-50, Math.min(50, deltaX)) // Smaller force cap for arrow optimization
+          
+          const newX = currentPos.x + deltaX
+          positions.set(course.id, { ...currentPos, x: newX })
+        }
+      })
+    }
+
+    // Use the best configuration found
+    bestPositions.forEach((pos, courseId) => {
+      if (clusteredCourses.some(c => c.id === courseId)) {
+        positions.set(courseId, pos)
+      }
+    })
   })
 
   return positions
+}
+
+// Enhanced arrow path calculation for flexible routing
+export const calculateFlexibleArrowPath = (sourcePos, targetPos, allPositions, existingArrows = []) => {
+  const deltaX = targetPos.x - sourcePos.x
+  const deltaY = targetPos.y - sourcePos.y
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+  
+  // Calculate curvature based on distance and potential conflicts
+  let curvature = Math.min(distance * 0.25, 100)
+  
+  // Increase curvature if there are many existing arrows
+  if (existingArrows.length > 10) {
+    curvature *= 1.5
+  }
+  
+  // Calculate control points for bezier curve
+  const midX = sourcePos.x + deltaX * 0.5
+  const midY = sourcePos.y + deltaY * 0.5
+  
+  // Add horizontal offset to avoid overlaps
+  const horizontalOffset = deltaX > 0 ? curvature : -curvature
+  const verticalOffset = Math.abs(deltaY) > 150 ? curvature * 0.6 : curvature * 0.8
+  
+  // Create waypoints for flexible path
+  const waypoints = [
+    { x: sourcePos.x, y: sourcePos.y + 25 },
+    { x: sourcePos.x + deltaX * 0.2, y: sourcePos.y + verticalOffset },
+    { x: midX + horizontalOffset, y: midY },
+    { x: targetPos.x - deltaX * 0.2, y: targetPos.y - verticalOffset },
+    { x: targetPos.x, y: targetPos.y - 25 }
+  ]
+  
+  return waypoints
 }
 
 // Find all prerequisite paths to a target course and courses that depend on it

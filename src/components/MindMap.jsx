@@ -11,6 +11,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import CourseNode from "./CourseNode";
 import Legend from "./Legend";
+import FlexibleBezierEdge from "./FlexibleBezierEdge";
 import {
   calculateCourseLayout,
   findPrerequisitePaths,
@@ -18,6 +19,10 @@ import {
 
 const nodeTypes = {
   course: CourseNode,
+};
+
+const edgeTypes = {
+  flexibleBezier: FlexibleBezierEdge,
 };
 
 const MindMap = ({
@@ -161,7 +166,7 @@ const MindMap = ({
     setNodes,
   ]);
 
-  // Create edges from prerequisites
+  // Create edges from prerequisites with flexible routing
   useEffect(() => {
     if (!showArrows) {
       setEdges([]);
@@ -170,6 +175,7 @@ const MindMap = ({
 
     const courseIds = new Set(filteredCourses.map((c) => c.id));
     const prerequisiteEdges = [];
+    const positions = calculateCourseLayout(filteredCourses);
 
     // Get all prerequisite paths if a course is selected
     const relevantConnections = selectedCourse
@@ -202,6 +208,7 @@ const MindMap = ({
                 id: edgeId,
                 source: item.value,
                 target: targetCourseId,
+                type: 'flexibleBezier', // Use smoothstep for curved arrows
                 style: {
                   stroke: isHighlighted ? "#FF6B35" : "#000000",
                   strokeWidth: isHighlighted ? 4 : 2,
@@ -250,9 +257,11 @@ const MindMap = ({
                 id: edgeId,
                 source: item.value,
                 target: targetCourseId,
+                type: 'flexibleBezier', // Use smoothstep for curved arrows
                 style: {
                   stroke: isHighlighted ? "#FF6B35" : orColor,
                   strokeWidth: isHighlighted ? 4 : 2,
+                  strokeDasharray: "5,5", // Dashed lines for OR connections
                 },
                 animated: isHighlighted,
                 markerEnd: {
@@ -295,8 +304,17 @@ const MindMap = ({
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         fitView
         className="bg-background"
+        onPaneClick={() => setSelectedCourse(null)}
+        // Add connection line style for more flexible appearance
+        connectionLineStyle={{
+          strokeWidth: 2,
+          stroke: '#4ECDC4',
+        }}
+        // Enable smooth connections
+        connectionMode="loose"
       >
         <Controls />
         <MiniMap />
@@ -304,7 +322,10 @@ const MindMap = ({
       </ReactFlow>
       <Legend />
     </div>
-  );
-};
+  )
+}
 
-export default MindMap;
+export default MindMap
+
+
+
