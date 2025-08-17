@@ -323,8 +323,8 @@ export const calculateCourseLayout = (courses) => {
           if (!currentPos) return;
           
           // Small random adjustments
-          const deltaX = (Math.random() - 0.5) * 60;
-          const deltaY = (Math.random() - 0.5) * 40;
+          const deltaX = (Math.random() - 0.5) * 0;
+          const deltaY = (Math.random() - 0.5) * 0;
           
           testPositions.set(course.id, {
             x: currentPos.x + deltaX,
