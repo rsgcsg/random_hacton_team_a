@@ -328,7 +328,7 @@ const MindMap = ({
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
-        defaultViewport={{ x: 0, y: 0, zoom: 0.3 }}
+        defaultViewport={{ x: 500, y: 100, zoom: 0.3 }}
         minZoom={0.1}
         className="bg-background"
       >
