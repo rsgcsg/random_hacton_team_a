@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button.jsx";
 import Sidebar from "./components/Sidebar";
 import MindMap from "./components/MindMap";
 import CourseDetailsPanel from "./components/CourseDetailsPanel";
 import sampleData from "./assets/sample_data.json";
 import newSampleData from "./assets/other_sample_data.json";
+import coursesData from "./data/prereq_structured.json";
 import "./App.css";
 import convertCourses from "./utils/jsonConvert";
 
@@ -22,6 +22,11 @@ function App() {
 
     // Sort the data
     const newCourses = convertCourses(newSampleData);
+    // const newCourses = convertCourses(coursesData);
+
+    // console.log("Original courses:", newSampleData);
+    // console.log("New courses data:", coursesData.length);
+
     const newData = sampleData;
     newData.courses = newCourses;
 

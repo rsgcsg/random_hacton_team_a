@@ -61,7 +61,7 @@
     {
       "id": "CS",
       "name": "Computer Science",
-      "color": "#FF5733",
+      "color": "#7CDB5C",
       "major_array": [
         "Data Science",
         "Machine Learning",
@@ -87,38 +87,81 @@
     {
       "id": "Applied Maths",
       "name": "Applied Maths",
-      "color": "#FFC300",
-      "course_array": []
+      "color": "#D607F0",
+      "course_array": [
+        "MATH2001",
+        "MATH2901",
+        "MATH2100",
+        "STAT2003",
+        "MATH3102",
+        "MATH3401",
+        "MATH3901",
+        "MATH3101",
+        "MATH3104",
+        "MATH3201"
+      ]
     },
     {
       "id": "Mathematical Artificial Intelligence",
       "name": "Mathematical Artificial Intelligence",
-      "color": "#FFC300",
-      "course_array": []
+      "color": "#33FF57",
+      "course_array": [
+        "MATH2001",
+        "MATH2901",
+        "STAT2003",
+        "STAT2004",
+        "STAT2904",
+        "MATH3204",
+        "STAT3006",
+        "STAT3007",
+        "MATH3402",
+        "MATH3401"
+      ]
     },
     {
       "id": "Optimisation and Operations Ressearch",
       "name": "Optimisation and Operations Ressearch",
-      "color": "#FFC300",
-      "course_array": []
+      "color": "#3375FF",
+      "course_array": [
+        "MATH2001",
+        "MATH2901",
+        "STAT2003",
+        "MATH2302",
+        "MATH2302",
+        "MATH3204",
+        "MATH3205"
+      ]
     },
     {
       "id": "Mathematical Physics",
       "name": "Mathematical Physics",
-      "color": "#FFC300",
-      "course_array": []
+      "color": "#A833FF",
+      "course_array": [
+        "MATH2001",
+        "MATH2901",
+        "MATH2100",
+        "MATH2301",
+        "MATH3103",
+        "MATH3401",
+        "MATH3901",
+        "MATH3405",
+        "MATH3404"
+      ]
     },
     {
       "id": "Statistics and Mathematical Data Science",
       "name": "Statistics and Mathematical Data Science",
       "color": "#DAF7A6",
-      "course_array": []
-    },
-    {
-      "id": "CE",
-      "name": "Computer Engineering",
-      "color": "#C70039",
-      "course_array": ["CS101", "PH101", "EE201"]
+      "course_array": [
+        "MATH2001",
+        "MATH2901",
+        "STAT2003",
+        "STAT2004",
+        "STAT2904",
+        "MATH3204",
+        "MATH3090",
+        "MATH3401"
+      ]
     }
   ],
   "courses": [

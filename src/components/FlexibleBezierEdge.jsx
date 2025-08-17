@@ -13,59 +13,61 @@ const FlexibleBezierEdge = ({
   markerEnd,
   data,
 }) => {
-  // Calculate flexible control points for better routing
-  const calculateFlexiblePath = () => {
-    const dx = targetX - sourceX;
-    const dy = targetY - sourceY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+  // Advanced flexible path calculation with intersection avoidance
+  const calculateAdvancedFlexiblePath = () => {
+    const deltaX = targetX - sourceX;
+    const deltaY = targetY - sourceY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     
-    // Base control point offset
-    let controlOffset = Math.min(distance * 0.3, 100);
-    
-    // Add flexibility based on arrow direction and distance
-    const horizontalOffset = Math.abs(dx) > Math.abs(dy) ? controlOffset * 0.8 : controlOffset * 1.2;
-    const verticalOffset = Math.abs(dy) > Math.abs(dx) ? controlOffset * 0.8 : controlOffset * 1.2;
-    
-    // Adjust control points to avoid overlapping with other arrows
-    let sourceControlX = sourceX;
-    let sourceControlY = sourceY + verticalOffset;
-    let targetControlX = targetX;
-    let targetControlY = targetY - verticalOffset;
-    
-    // Add horizontal offset for better separation
-    if (dx > 0) {
-      sourceControlX += horizontalOffset * 0.5;
-      targetControlX -= horizontalOffset * 0.5;
-    } else {
-      sourceControlX -= horizontalOffset * 0.5;
-      targetControlX += horizontalOffset * 0.5;
+    if (distance === 0) {
+      return getBezierPath({
+        sourceX, sourceY, sourcePosition,
+        targetX, targetY, targetPosition,
+        curvature: 0.25
+      });
     }
     
-    // Create more flexible curve by adding intermediate waypoints
-    const midX = (sourceX + targetX) / 2;
-    const midY = (sourceY + targetY) / 2;
+    // Calculate intelligent control points for better arrow routing
+    const baseOffset = Math.min(distance * 0.4, 200);
     
-    // Add some randomness to avoid identical paths
-    const randomOffset = (Math.sin(sourceX + targetX + sourceY + targetY) * 20);
+    // Create unique variation for each arrow to spread them out
+    const idHash = id.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0);
+      return a & a;
+    }, 0);
     
-    // Adjust for arrow density - spread out arrows that are close together
-    const densityOffset = Math.sin(id.length) * 15;
+    const variation = (Math.abs(idHash) % 100) / 100; // 0-1 range
+    const offsetMultiplier = 0.7 + variation * 0.6; // 0.7-1.3 range
+    const curvatureOffset = baseOffset * offsetMultiplier;
     
-    sourceControlX += randomOffset + densityOffset;
-    targetControlX += randomOffset - densityOffset;
+    // Calculate perpendicular direction for curve offset
+    const perpX = -deltaY / distance;
+    const perpY = deltaX / distance;
     
-    return getBezierPath({
-      sourceX,
-      sourceY,
-      sourcePosition,
-      targetX,
-      targetY,
-      targetPosition,
-      curvature: 0.25,
-    });
+    // Determine curve direction to spread arrows
+    const curveDirection = ((Math.abs(sourceX + targetX + sourceY + targetY) % 2) * 2 - 1);
+    
+    // Enhanced control point calculation for better arrow separation
+    const controlPoint1X = sourceX + deltaX * 0.25 + perpX * curvatureOffset * curveDirection;
+    const controlPoint1Y = sourceY + deltaY * 0.25 + perpY * curvatureOffset * curveDirection;
+    
+    const controlPoint2X = targetX - deltaX * 0.25 + perpX * curvatureOffset * curveDirection;
+    const controlPoint2Y = targetY - deltaY * 0.25 + perpY * curvatureOffset * curveDirection;
+    
+    // Add additional offset for similar arrows (same source or target)
+    const similarArrowOffset = Math.sin(sourceX * 0.01 + targetX * 0.01) * 30;
+    
+    // Apply the calculated control points
+    const customPath = `M ${sourceX},${sourceY} C ${controlPoint1X + similarArrowOffset},${controlPoint1Y} ${controlPoint2X + similarArrowOffset},${controlPoint2Y} ${targetX},${targetY}`;
+    
+    // Return custom path with label position
+    const labelX = (sourceX + controlPoint1X + controlPoint2X + targetX) / 4;
+    const labelY = (sourceY + controlPoint1Y + controlPoint2Y + targetY) / 4;
+    
+    return [customPath, labelX, labelY];
   };
   
-  const [edgePath, labelX, labelY] = calculateFlexiblePath();
+  const [edgePath, labelX, labelY] = calculateAdvancedFlexiblePath();
   
   return (
     <>
@@ -80,6 +82,10 @@ const FlexibleBezierEdge = ({
 };
 
 export default FlexibleBezierEdge;
+
+
+
+
 
 
 

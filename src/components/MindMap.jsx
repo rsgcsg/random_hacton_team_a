@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
+  useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CourseNode from "./CourseNode";
@@ -36,10 +37,25 @@ const MindMap = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const { setCenter } = useReactFlow();
+
+  useEffect(() => {
+    if (selectedCourse) {
+      const node = nodes.find((n) => n.id === selectedCourse.id);
+      if (node) {
+        // Zoom and center on the node
+        setCenter(node.position.x + 100, node.position.y, {
+          zoom: 0.6, // adjust zoom level as needed
+          duration: 800, // smooth animation (ms)
+        });
+      }
+    }
+  }, [selectedCourse, nodes, setCenter]);
 
   // Filter courses based on selections
   const filteredCourses = useMemo(() => {
     let coursesToDisplay = new Set();
+<<<<<<< HEAD
 
     // Add courses from selected degrees
     selectedDegrees.forEach((degreeId) => {
@@ -65,6 +81,37 @@ const MindMap = ({
       return data.courses;
     }
 
+=======
+
+    // Add courses from selected degrees
+    selectedDegrees.forEach((degreeId) => {
+      const degree = data.degrees.find((d) => d.id === degreeId);
+      if (degree && degree.course_array) {
+        degree.course_array.forEach((courseId) =>
+          coursesToDisplay.add(courseId)
+        );
+      }
+    });
+
+    // Add courses from selected majors
+    selectedMajors.forEach((majorId) => {
+      const major = data.majors.find((m) => m.id === majorId);
+      if (major && major.course_array) {
+        major.course_array.forEach((courseId) =>
+          coursesToDisplay.add(courseId)
+        );
+      }
+    });
+
+    // Add explicitly selected courses
+    selectedCourses.forEach((courseId) => coursesToDisplay.add(courseId));
+
+    // If no degrees, majors, or specific courses are selected, show all courses
+    if (coursesToDisplay.size === 0) {
+      return data.courses;
+    }
+
+>>>>>>> a77141f7d143642e331008e4f10f67e83e0fc0ab
     return data.courses.filter((course) => coursesToDisplay.has(course.id));
   }, [
     data.courses,
@@ -76,6 +123,7 @@ const MindMap = ({
   ]);
 
   // Get course color based on selections
+<<<<<<< HEAD
   const getCourseColor = useCallback((course) => {
     // Priority: course > major > degree
     if (selectedCourses.includes(course.id)) {
@@ -105,6 +153,57 @@ const MindMap = ({
     }
     return [course.color || 'gray'];
   }, [selectedCourses, selectedMajors, selectedDegrees, data.majors, data.degrees]);
+=======
+  const getCourseColor = useCallback(
+    (course) => {
+      // Priority: course > major > degree
+      if (selectedCourses.includes(course.id)) {
+        const color = course.color || "gray";
+        return [color];
+      }
+
+      const selectedMajorColors = selectedMajors
+        .map((majorId) => data.majors.find((m) => m.id === majorId))
+        .filter(
+          (major) =>
+            major &&
+            major.course_array &&
+            major.course_array.includes(course.id)
+        )
+        .map((major) => major.color)
+        .filter(Boolean);
+
+      if (selectedMajorColors.length > 0) {
+        return selectedMajorColors; // return all colors, not just the first
+      }
+
+      // Check if course belongs to any selected degree
+      const selectedDegreeColors = selectedDegrees
+        .map((degreeId) => data.degrees.find((d) => d.id === degreeId))
+        .filter(
+          (degree) =>
+            degree &&
+            degree.course_array &&
+            degree.course_array.includes(course.id)
+        )
+        .map((degree) => degree.color)
+        .filter(Boolean);
+
+      if (selectedDegreeColors.length > 0) {
+        return selectedDegreeColors;
+      }
+      const color = course.color || "gray";
+      return [color];
+    },
+    [
+      selectedCourses,
+      selectedMajors,
+      selectedDegrees,
+      data.majors,
+      data.degrees,
+    ]
+  );
+>>>>>>> a77141f7d143642e331008e4f10f67e83e0fc0ab
 
   // Create nodes from filtered courses
   useEffect(() => {
@@ -265,7 +364,17 @@ const MindMap = ({
   );
 
   return (
-    <div className="flex-1 h-full relative">
+    <div
+      className="flex-1 h-full relative"
+      onClick={(e) => {
+        if (
+          !e.target.closest(".react-flow__node") &&
+          !e.target.closest(".react-flow__edge")
+        ) {
+          setSelectedCourse(null);
+        }
+      }}
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -273,8 +382,13 @@ const MindMap = ({
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+<<<<<<< HEAD
         edgeTypes={edgeTypes}
         fitView
+=======
+        defaultViewport={{ x: 500, y: 100, zoom: 0.3 }}
+        minZoom={0.1}
+>>>>>>> a77141f7d143642e331008e4f10f67e83e0fc0ab
         className="bg-background"
         onPaneClick={() => setSelectedCourse(null)}
         // Add connection line style for more flexible appearance

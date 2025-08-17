@@ -3,7 +3,7 @@ export default function convertCourses(data) {
     return {
       id: code,
       name: code,
-      description: value.summary,
+      description: value.summary ?? "",
       color: getRandomColor(),
       Prerequisite: formatPrereq(value.prereq)
     };
@@ -58,31 +58,33 @@ function formatPrereq(prereq) {
   }
 
   const recurse = (prereq) => {
-    if (!prereq) console.log("NOPE")
-
     if (prereq.op === "COURSE") {
       return {
         type: "course",
         value: prereq.code
-      }
-    } else if (prereq.op === "AND") {
+      };
+    }
+
+    const args = prereq.args || []; // fallback to empty array
+
+    if (prereq.op === "AND") {
       return {
         type: "AND",
-        items: prereq.args.map((arg) => recurse(arg))
-      }
+        items: args.map(recurse)
+      };
     } else if (prereq.op === "N_OF" && prereq.n === 1) {
       return {
         type: "OR",
-        items: prereq.args.map((arg) => recurse(arg))
-      }
+        items: args.map(recurse)
+      };
     }
 
-    if (!prereq) console.log("Unsolved not handled")
     return {
       type: "OR",
-      items: prereq.args.map((arg) => recurse(arg))
-    }
-  }
+      items: args.map(recurse)
+    };
+  };
+
 
   return {
     prerequisites: [
